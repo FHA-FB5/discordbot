@@ -1,0 +1,41 @@
+import environment from '@/environment';
+import winston from 'winston';
+import Sentry from 'winston-transport-sentry-node';
+
+const currentDate = new Date();
+const fileDatePrefix = currentDate.toISOString().split('T')[0];
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'protector', shard: environment.shard },
+  transports: [
+    new winston.transports.File({
+      filename: `./logs/${fileDatePrefix}-error.log`,
+      level: 'error',
+      maxsize: 1024,
+    }),
+    new winston.transports.File({
+      filename: `./logs/${fileDatePrefix}-combined.log`,
+      maxsize: 1024,
+    }),
+  ],
+});
+
+if (environment.sentry_dsn) {
+  logger.add(new Sentry({
+    sentry: {
+      serverName: 'protector',
+      dsn: environment.sentry_dsn,
+    },
+    level: 'error',
+  }));
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.simple(),
+  }));
+}
+
+export default logger;
