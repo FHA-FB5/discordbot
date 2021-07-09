@@ -1,5 +1,6 @@
 import { ErrorMessageEmbed, InfoMessageEmbed } from '@/embeds';
 import environment from '@/environment';
+import { exchangeUrl } from '@/extensions/messages';
 import {
   getMessage, GuildOptions, keyv, logger,
 } from '@/utils';
@@ -108,6 +109,8 @@ export default {
   async execute(message: Message, client: Client) {
     if (!message.author.bot) {
       await commandHandler(message, client);
+
+      exchangeUrl( message );
     }
   },
 };
