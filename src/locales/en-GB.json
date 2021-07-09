@@ -7,7 +7,12 @@
         "success": "Server was successfully initialised."
       }
     },
-    "cooldown": "[0]Please wait a moment to perform this action again.|[1]Please wait one second to perform this action again.|Please wait %s seconds to perform this action again."
+    "cooldown": "[0]Please wait a moment to perform this action again.|[1]Please wait one second to perform this action again.|Please wait %s seconds to perform this action again.",
+    "exams": {
+      "success": "Your request has been accepted and send to the person in charge.",
+      "not_allowed": "Your request contains content that is outside of the FSR's possibilities!",
+      "invalid": "The given Channel ID could not be applied to the guild! Your Input is: "
+    }
   },
   "embed": {
     "error": {

@@ -22,6 +22,7 @@
     "keyv": "^4.0.3",
     "mongoose": "^5.12.7",
     "node-rdkafka": "^2.10.1",
+    "node-telegram-bot-api": "^0.53.0",
     "tslib": "^2.2.0",
     "winston": "^3.3.3",
     "winston-transport-sentry-node": "^1.0.2"
