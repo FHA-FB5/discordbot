@@ -6,7 +6,9 @@ interface Environment {
   mongodb_uri: string
   sentry_dsn: string
   keyv_uri: string
-  shard: number
+  shard: number,
+  telegram_bot_token: string,
+  telegram_feed_id: number
 }
 
 const environment: Environment = {
@@ -18,6 +20,8 @@ const environment: Environment = {
   sentry_dsn: process.env.SENTRY_DSN || '',
   keyv_uri: process.env.KEYV_URI || '',
   shard: Number(process.env.SHARD) || 0,
+  telegram_bot_token: process.env.TELEGRAM_BOT_TOKEN || '',
+  telegram_feed_id: Number(process.env.TELEGRAM_FEED_ID) || -1,
 };
 
 export default environment;
