@@ -11,7 +11,7 @@
     "exams": {
       "success": "Your request has been accepted and send to the person in charge.",
       "not_allowed": "Your request contains content that is outside of the FSR's possibilities!",
-      "invalid": "The given Channel ID could not be applied to the guild! Your Input is: "
+      "invalid": "The given Channel ID could not be applied to the guild! Your Input is:\n"
     }
   },
   "embed": {

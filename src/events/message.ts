@@ -4,6 +4,7 @@ import {
   getMessage, GuildOptions, keyv, logger,
 } from '@/utils';
 import { Client, Message } from 'discord.js';
+import examHandler from '@/events/exams';
 
 async function commandHandler(message: Message, client: Client) {
   // get option
@@ -108,6 +109,8 @@ export default {
   async execute(message: Message, client: Client) {
     if (!message.author.bot) {
       await commandHandler(message, client);
+
+      await examHandler(message);
     }
   },
 };
