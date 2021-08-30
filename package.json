@@ -8,6 +8,7 @@
     "build:dev": "nodemon --watch src --ext ts --exec \"npm run eslint && npm run build\"",
     "build:development": "npm run build:dev",
     "start": "node -r dotenv/config dist/index",
+    "start:deployCommands": "node -r dotenv/config dist/deployCommands",
     "start:watch": "nodemon -r dotenv/config dist/index",
     "eslint": "npx eslint 'src/**.ts'"
   },
@@ -15,7 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
     "@keyv/redis": "^2.1.2",
+    "discord-api-types": "^0.22.0",
     "discord.js": "^13.1.0",
     "dotenv": "^10.0.0",
     "i18n": "^0.13.2",

@@ -1,21 +1,28 @@
-import { Client, Collection } from 'discord.js';
+import { Client, Collection, Intents } from 'discord.js';
 import environment from '@/environment';
 import { readdirSync } from 'fs';
-import { i18n, logger } from '@/utils';
+import { logger, i18n } from '@/utils';
 
 require('dotenv').config();
 require('@/connections/mongoDB');
 
 // setup client
-const client = new Client();
+const client = new Client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_PRESENCES,
+    Intents.FLAGS.GUILD_MEMBERS,
+  ],
+});
 client.i18n = i18n;
 
 // events
 const eventFiles = readdirSync(`${__dirname}/events/`).filter((file) => file.endsWith('.js'));
 
-// eslint-disable-next-line no-restricted-syntax
+//eslint-disable-next-line no-restricted-syntax
 for (const file of eventFiles) {
-  // eslint-disable-next-line import/no-dynamic-require, global-require
+  // eslint-disable-next-line global-require
   const event = require(`./events/${file}`);
   logger.log('info', 'load event', { event: event.default.name });
   if (event.default.once) {
@@ -38,7 +45,7 @@ for (const folder of commandFolders) {
   const commandFiles = readdirSync(`${__dirname}/commands/${folder}`).filter((file) => file.endsWith('.js'));
   // eslint-disable-next-line no-restricted-syntax
   for (const file of commandFiles) {
-    // eslint-disable-next-line import/no-dynamic-require, global-require
+    // eslint-disable-next-line global-require
     const command = require(`./commands/${folder}/${file}`);
     logger.log('info', 'load command', { module: folder, command: command.default.name });
     client.commands.set(command.default.name, command.default);

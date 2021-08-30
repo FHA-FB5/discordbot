@@ -1,15 +1,12 @@
-import { Client, Message } from 'discord.js';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { CommandInteraction } from 'discord.js';
 
 export default {
   name: 'ping',
-  args: true,
-  usage: '<user> <role>',
-  guildOnly: true,
-  cooldown: 5000,
-  aliases: ['pong'],
-  permissions: ['KICK_MEMBERS'],
-  execute(message: Message, client: Client) {
-    message.channel.send('Pong!');
-    console.log(JSON.stringify(client.shard));
+  data: new SlashCommandBuilder()
+    .setName('ping')
+    .setDescription('Replies with Pong!'),
+  async execute(interaction: CommandInteraction) {
+    await interaction.reply('Pong!');
   },
 };

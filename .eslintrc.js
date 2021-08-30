@@ -10,12 +10,14 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
-    project: './tsconfig.json'
+    project: ['./tsconfig.json'],
   },
   plugins: [
     '@typescript-eslint',
   ],
   rules: {
-    "no-underscore-dangle": 'off'
+    "no-underscore-dangle": 'off',
+    "import/extensions": 'off',
+    "import/no-extraneous-dependencies": 'off',
   },
 };

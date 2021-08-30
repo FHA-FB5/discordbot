@@ -1,5 +1,4 @@
 import { I18n } from 'i18n';
-import { count } from 'node:console';
 import logger from './logger';
 
 const i18n = new I18n();

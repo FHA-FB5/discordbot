@@ -20,7 +20,9 @@ export default {
         logger.log('error', 'command.admin.init guild.findOneAndUpdate', err);
       });
 
-      message.reply(new SuccessMessageEmbed({ description: getMessage('command.admin.init.success') }));
+      message.reply({
+        embeds: [new SuccessMessageEmbed({ description: getMessage('command.admin.init.success') })],
+      });
     }
   },
 };

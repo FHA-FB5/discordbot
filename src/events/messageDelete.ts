@@ -6,6 +6,7 @@ import KafkaProducer from '@/utils/KafkaProducer';
 export default {
   name: 'messageDelete',
   async execute(message: Message, client: Client) {
+    console.log(message);
     // embed
     const logChannel = client.channels.cache.get('821399725458587799') as TextChannel;
     const infoEmbed = new MessageEmbed()
@@ -41,7 +42,7 @@ export default {
             && fetchedLog.createdTimestamp >= (Date.now() - 5000)
             && extra.count >= 1) {
             infoEmbed.addFields(
-              { name: 'Message probably deleted by:', value: `${fetchedLog.executor} (${fetchedLog.executor.id})` },
+              { name: 'Message probably deleted by:', value: `${fetchedLog.executor} (${fetchedLog.executor?.id})` },
             );
           }
 
@@ -58,13 +59,15 @@ export default {
     if (message.content) infoEmbed.addField('Message content:', message.content);
 
     message.attachments.forEach((attachment) => {
-      infoEmbed.addField('Message attachment:', attachment.attachment);
+      //infoEmbed.addField('Message attachment:', attachment.attachment);
       infoEmbed.addField('Message attachment URL:', attachment.url);
       infoEmbed.addField('Message attachment Proxy-URL:', attachment.proxyURL);
       infoEmbed.setImage(attachment.attachment.toString());
     });
 
-    logChannel.send(infoEmbed);
+    logChannel.send({
+      embeds: [infoEmbed],
+    });
 
     // send message to kafka
     new KafkaProducer('message', Buffer.from(JSON.stringify(
