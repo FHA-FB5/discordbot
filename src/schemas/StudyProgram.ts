@@ -9,6 +9,10 @@ export default new Schema({
     type: String,
     required: true,
   },
+  abbreviation: {
+    type: String,
+    required: true,
+  },
   roleId: {
     type: String,
     required: true,

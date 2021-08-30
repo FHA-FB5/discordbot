@@ -19,7 +19,12 @@ i18n.configure({
   },
 });
 
-function getMessage(phrase: string, config: { count?: number, locale?: string } = { }) {
+function getMessage(phrase: string, config: {
+  count?: number,
+  locale?: string
+  parameter?: any
+} = { },
+) {
   // set locale if set and existing
   if (config.locale && i18n.getLocales().includes(config.locale)) {
     i18n.setLocale(config.locale);
@@ -28,7 +33,10 @@ function getMessage(phrase: string, config: { count?: number, locale?: string } 
   // check if pluralisation is used
   if (config.count || config.count === 0) {
     return i18n.__n(phrase, config.count);
+  } else if (config.parameter) {
+    return i18n.__mf(phrase, config.parameter);
   }
+
   return i18n.__(phrase);
 }
 

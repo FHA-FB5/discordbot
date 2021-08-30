@@ -1,9 +1,8 @@
 import { Client, Collection, Intents } from 'discord.js';
-import environment from '@/environment';
 import { readdirSync } from 'fs';
 import { logger, i18n } from '@/utils';
+import Config from '@/Config';
 
-require('dotenv').config();
 require('@/connections/mongoDB');
 
 // setup client
@@ -39,14 +38,14 @@ for (const file of eventFiles) {
 // setup commands
 client.commands = new Collection();
 
-const commandFolders = readdirSync(`${__dirname}/commands`);
+const commandFolders = readdirSync(`${__dirname}/interactions/commands`);
 // eslint-disable-next-line no-restricted-syntax
 for (const folder of commandFolders) {
-  const commandFiles = readdirSync(`${__dirname}/commands/${folder}`).filter((file) => file.endsWith('.js'));
+  const commandFiles = readdirSync(`${__dirname}/interactions/commands/${folder}`).filter((file) => file.endsWith('.js'));
   // eslint-disable-next-line no-restricted-syntax
   for (const file of commandFiles) {
     // eslint-disable-next-line global-require
-    const command = require(`./commands/${folder}/${file}`);
+    const command = require(`./interactions/commands/${folder}/${file}`);
     logger.log('info', 'load command', { module: folder, command: command.default.name });
     client.commands.set(command.default.name, command.default);
   }
@@ -55,5 +54,5 @@ for (const folder of commandFolders) {
 // login client
 logger.log('info', 'client login');
 client.login(
-  environment.bot_token,
+  Config.botToken,
 );

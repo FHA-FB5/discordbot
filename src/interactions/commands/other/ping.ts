@@ -10,6 +10,6 @@ export default {
     .setName('ping')
     .setDescription(getMessage('command.other.ping.description')),
   async execute(interaction: CommandInteraction) {
-    await interaction.reply('Pong!');
+    await interaction.reply({ content: 'Pong!' });
   },
 };

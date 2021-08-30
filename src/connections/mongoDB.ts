@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import environment from '@/environment';
 import { logger } from '@/utils';
+import Config from '@/Config';
 
 mongoose
-  .connect(environment.mongodb_uri, {
+  .connect(Config.mongodbUri, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
