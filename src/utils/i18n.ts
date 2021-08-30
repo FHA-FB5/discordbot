@@ -4,7 +4,7 @@ import logger from './logger';
 const i18n = new I18n();
 i18n.configure({
   locales: ['de-DE', 'en-GB'],
-  defaultLocale: 'en-GB',
+  defaultLocale: 'de-DE',
   retryInDefaultLocale: true,
   directory: `${__dirname}/../locales`,
   objectNotation: true,
@@ -19,7 +19,7 @@ i18n.configure({
   },
 });
 
-function getMessage(phrase: string, config: { count?: number, locale?: string } = {}) {
+function getMessage(phrase: string, config: { count?: number, locale?: string } = { }) {
   // set locale if set and existing
   if (config.locale && i18n.getLocales().includes(config.locale)) {
     i18n.setLocale(config.locale);
