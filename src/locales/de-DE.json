@@ -1,6 +1,12 @@
 {
   "command": {
     "cooldown": "[0]Bitte warten Sie einen Moment, um diese Aktion erneut durchzuführen.|[1]Bitte warten Sie eine Sekunde, um diese Aktion erneut durchzuführen.|Bitte warten Sie %s Sekunden, um diese Aktion erneut durchzuführen.",
+    
+    "dev": {
+      "devInit": {
+        "description": "Sendet einen {{ping}} an den Server."
+      }
+    },
     "other": {
       "ping": {
         "description": "Sendet einen Ping an den Server."

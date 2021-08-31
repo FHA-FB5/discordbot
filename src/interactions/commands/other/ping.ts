@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { CommandInteraction } from 'discord.js';
+import { CommandInteraction, MessageActionRow } from 'discord.js';
 import { getMessage } from '@/utils';
+import * as pingButton from '@/interactions/buttons/other/ping';
 
 export default {
   name: 'ping',
@@ -10,6 +11,15 @@ export default {
     .setName('ping')
     .setDescription(getMessage('command.other.ping.description')),
   async execute(interaction: CommandInteraction) {
-    await interaction.reply({ content: 'Pong!' });
+    const buttonRow = new MessageActionRow()
+      .addComponents(
+        pingButton.default.data,
+      );
+
+    await interaction.reply({
+      content: 'Pong!', components: [
+        buttonRow,
+      ],
+    });
   },
 };
