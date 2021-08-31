@@ -1,11 +1,11 @@
 import { ButtonInteraction, MessageButton } from 'discord.js';
 
 export default {
-  customId: 'ping',
+  customId: 'other.ping',
   cooldown: 10000,
   defaultPermission: false,
   data: new MessageButton()
-    .setCustomId('ping')
+    .setCustomId('other.ping')
     .setLabel('Ping')
     .setStyle('PRIMARY'),
   async execute(interaction: ButtonInteraction) {
