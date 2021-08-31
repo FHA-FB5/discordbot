@@ -110,9 +110,10 @@ import { logger } from '@/utils';
 
 export default {
   name: 'messageCreate',
-  async execute(message: Message) {
+  async execute() {
+    //async execute(message: Message) {
     //console.log(message);
-    logger.log('info', 'discord event.messageCreate');
+    //logger.log('info', 'discord event.messageCreate');
     // if (!message.author.bot) {
     //   await commandHandler(message, client);
     // }
