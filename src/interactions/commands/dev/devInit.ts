@@ -7,6 +7,7 @@ import { SuccessMessageEmbed } from '@/embeds';
 export default {
   name: 'dev-init',
   dev: true,
+  cooldown: 30000,
   data: new SlashCommandBuilder()
     .setName('dev-init')
     .setDescription(getMessage('command.dev.devInit.description')),

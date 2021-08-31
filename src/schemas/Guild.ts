@@ -9,9 +9,6 @@ export default new Schema({
     type: String,
   },
   options: {
-    prefix: {
-      type: String,
-    },
     locale: {
       type: String,
     },
