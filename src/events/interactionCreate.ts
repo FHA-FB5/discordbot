@@ -32,6 +32,7 @@ async function cooldownHandler(key: string, cooldown: number, interaction: Butto
             }),
           }),
         ],
+        ephemeral: true,
       });
 
       // set cooldown for cooldown response
@@ -54,7 +55,7 @@ async function interactionButton(interaction: ButtonInteraction, context: any) {
 
   // check for coolodown
   if (button.cooldown) {
-    if (await cooldownHandler(`${button.customId}`, button.cooldown, interaction)) return;
+    if (await cooldownHandler(`button:${button.customId}`, button.cooldown, interaction)) return;
   }
 
   try {
@@ -72,7 +73,7 @@ async function interactionCommand(interaction: CommandInteraction, context: any)
 
   // check for coolodown
   if (command.cooldown) {
-    if (await cooldownHandler(`${command.name}`, command.cooldown, interaction)) return;
+    if (await cooldownHandler(`command:${command.name}`, command.cooldown, interaction)) return;
   }
 
   try {
@@ -90,7 +91,7 @@ async function interactionSelectMenu(interaction: SelectMenuInteraction, context
 
   // check for coolodown
   if (selectMenu.cooldown) {
-    if (await cooldownHandler(`${selectMenu.customId}`, selectMenu.cooldown, interaction)) return;
+    if (await cooldownHandler(`selectMenu:${selectMenu.customId}`, selectMenu.cooldown, interaction)) return;
   }
 
   try {
