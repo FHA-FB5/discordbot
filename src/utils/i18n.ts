@@ -34,7 +34,7 @@ function getMessage(phrase: string, config: {
   if (config.count || config.count === 0) {
     return i18n.__n(phrase, config.count);
   } else if (config.parameter) {
-    return i18n.__mf(phrase, config.parameter);
+    return i18n.__(phrase, config.parameter);
   }
 
   return i18n.__(phrase);
