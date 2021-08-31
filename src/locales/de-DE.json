@@ -4,7 +4,8 @@
     
     "dev": {
       "devInit": {
-        "description": "Sendet einen {{ping}} an den Server."
+        "description": "Initialisiert den Server im Bot.",
+        "success": "Der Server wurde erfolgreich initialisiert."
       }
     },
     "other": {
