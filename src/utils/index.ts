@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import GuildOptions from './GuildOptions';
 import { i18n, getMessage } from './i18n';
 import logger from './logger';

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Kafka, { MessageKey, MessageValue } from 'node-rdkafka';
 import { logger } from '@/utils';
 

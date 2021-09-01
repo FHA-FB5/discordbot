@@ -9,7 +9,6 @@ export default class GuildOptions {
   }
 
   async get(): Promise<{
-    prefix?: string
     locale?: string
   }> {
     const guildOptionsKeyv = keyv('guildOptions');
@@ -17,7 +16,10 @@ export default class GuildOptions {
 
     // if config was not found, load it from the db
     if (!guildOptions) {
-      const guild = (await Guild.findOne({ guildId: this.guildId }).select(['options', 'primaryLocale']).lean());
+      const guild = (await Guild.findOne({ guildId: this.guildId }).select([
+        'options',
+        'primaryLocale',
+      ]).lean());
 
       // check if options was found
       if (guild) {

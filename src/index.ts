@@ -1,8 +1,16 @@
 import { ShardingManager } from 'discord.js';
-import environment from './environment';
 import { logger } from './utils';
+import Config from '@/Config';
 
-const shardingManager = new ShardingManager(`${__dirname}/bot.js`, { token: environment.bot_token, totalShards: 1, shardList: [environment.shard] });
+const shardingManager = new ShardingManager(`${__dirname}/bot.js`, {
+  token: Config.botToken,
+  totalShards: 'auto',
+  shardList: [
+    Config.botShard,
+  ],
+});
 
-shardingManager.on('shardCreate', (shard) => logger.log('info', 'shardingManager shardCreate', shard));
+shardingManager.on('shardCreate', async () => {
+  logger.log('info', 'shardingManager shardCreate');
+});
 shardingManager.spawn();
