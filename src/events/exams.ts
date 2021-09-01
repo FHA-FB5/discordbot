@@ -1,9 +1,9 @@
 /* eslint-disable linebreak-style */
-import { SuccessMessageEmbed, WarningMessageEmbed } from '@/embeds';
-import { getMessage, logger, keyv } from '@/utils';
 import { Message } from 'discord.js';
+import { SuccessMessageEmbed, WarningMessageEmbed, ErrorMessageEmbed } from '@/embeds';
+import { getMessage, logger, keyv } from '@/utils';
 
-import { sendMessage } from '@/extensions/telegram-bot';
+import TelegramBot from '@/extensions/telegram-bot';
 
 function acceptRequest( acceptedMessage: Message ) {
   return acceptedMessage.reply(
@@ -25,7 +25,21 @@ function rejectRequest( rejectedMessage: Message ) {
   );
 }
 
-async function evaluate( message: Message ): Promise< boolean | undefined > {
+function sendErrorEmbed( message: Message ) {
+  return message.reply(
+    new ErrorMessageEmbed(
+      {
+        description: getMessage( 'command.exams.send_error' ),
+      },
+    ),
+  );
+}
+
+const deleteOptions = {
+  timeout: 30000,
+};
+
+async function evaluate( message: Message ): Promise< boolean | undefined | null > {
   const examChannelId = await keyv( 'exams' ).get( 'channel_id' );
 
   if ( !examChannelId ) {
@@ -37,28 +51,33 @@ async function evaluate( message: Message ): Promise< boolean | undefined > {
     const pattern = /(höma|höhere|hö\sma|mathe)+/gi;
     const isRequestNotStupid = !( message.cleanContent.match( pattern ) );
 
-    const deleteOptions = {
-      timeout: 30000,
-    };
-
     const replyMessage = isRequestNotStupid
       ? await acceptRequest( message ) : await rejectRequest( message );
     replyMessage.delete( deleteOptions );
     return isRequestNotStupid;
   }
-  return undefined;
+  return null;
 }
 
 export default async function examHandler( message: Message ) {
   const result = await evaluate( message );
   if ( typeof result === 'undefined' ) {
-    logger.error( 'Exam evaluation returned an unexpected error' );
+    logger.error( 'Message evaluation for exams returned an unexpected error' );
+    return;
+  }
+  if ( result === null ) {
+    // message was sent in different channel
     return;
   }
   if ( result ) {
     try {
-      sendMessage( message );
-      logger.info( 'A message has been send to Telegram feed' );
+      const returnCode = await TelegramBot.sendMessage( message );
+      if ( returnCode === -1 ) {
+        const errorMessage = await sendErrorEmbed( message );
+        errorMessage.delete( deleteOptions );
+      } else {
+        logger.info( 'A message has been send to Telegram feed' );
+      }
     } catch ( error ) {
       logger.error( `Sending message to Telegram Feed failed!\n' + ${error}` );
     }

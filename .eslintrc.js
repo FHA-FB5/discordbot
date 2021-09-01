@@ -17,6 +17,7 @@ module.exports = {
   ],
   rules: {
     "no-underscore-dangle": 'off',
-    "space-in-parens": 'warn'
+    "space-in-parens": 'warn',
+    "array-bracket-spacing": 'warn'
   },
 };

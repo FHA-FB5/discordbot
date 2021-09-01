@@ -4,7 +4,8 @@
     "exams": {
       "success": "Deine Anfrage wurde aufgenommen und weiter geleitet.",
       "not_allowed": "Deine Anfrage entspricht nicht den Möglichkeiten des FSR's!",
-      "invalid": "Die angegebene Channel ID kann nicht zugeordnet werden! Die Eingabe ist: "
+      "invalid": "Die angegebene Channel ID kann nicht zugeordnet werden! Die Eingabe ist:\n",
+      "send_error": "Es tut uns Leid, beim Senden deiner Nachricht ist ein Fehler aufgetreten. Bitte wende dich an einen Admin oder den FSR!"
     }
   },
   "embed": {
