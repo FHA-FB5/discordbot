@@ -25,6 +25,9 @@ export default class Config {
   /* keyv config */
   static keyvUri: string = env.get('KEYV_URI').required().asString();
 
+  /* service config */
+  static serviceName: string = env.get('SERVICE_NAME').default('discordbot').asString();
+
   /* sentry config */
   static sentryDSN: string | undefined = env.get('SENTRY_DSN').asString();
 }

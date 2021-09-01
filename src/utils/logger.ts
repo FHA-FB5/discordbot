@@ -1,6 +1,6 @@
-import environment from '@/environment';
 import winston from 'winston';
 import Sentry from 'winston-transport-sentry-node';
+import Config from '@/Config';
 
 const currentDate = new Date();
 const fileDatePrefix = currentDate.toISOString().split('T')[0];
@@ -8,7 +8,7 @@ const fileDatePrefix = currentDate.toISOString().split('T')[0];
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
-  defaultMeta: { service: 'protector', shard: environment.shard },
+  defaultMeta: { service: Config.serviceName, shard: Config.botShard },
   transports: [
     new winston.transports.File({
       filename: `./logs/${fileDatePrefix}-error.log`,
@@ -22,11 +22,11 @@ const logger = winston.createLogger({
   ],
 });
 
-if (environment.sentry_dsn) {
+if (Config.sentryDSN) {
   logger.add(new Sentry({
     sentry: {
-      serverName: 'protector',
-      dsn: environment.sentry_dsn,
+      serverName: Config.serviceName,
+      dsn: Config.sentryDSN,
     },
     level: 'error',
   }));
