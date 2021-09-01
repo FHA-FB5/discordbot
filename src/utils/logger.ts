@@ -8,7 +8,7 @@ const fileDatePrefix = currentDate.toISOString().split('T')[0];
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
-  defaultMeta: { service: 'protector', shard: Config.botShard },
+  defaultMeta: { service: Config.serviceName, shard: Config.botShard },
   transports: [
     new winston.transports.File({
       filename: `./logs/${fileDatePrefix}-error.log`,
@@ -25,7 +25,7 @@ const logger = winston.createLogger({
 if (Config.sentryDSN) {
   logger.add(new Sentry({
     sentry: {
-      serverName: 'protector',
+      serverName: Config.serviceName,
       dsn: Config.sentryDSN,
     },
     level: 'error',
