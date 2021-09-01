@@ -1,6 +1,8 @@
 import { ButtonInteraction, CommandInteraction, MessageComponentInteraction, SelectMenuInteraction } from 'discord.js';
 import { getMessage, GuildOptions, keyv, logger } from '@/utils';
 import { InfoMessageEmbed } from '@/embeds';
+import GuildCacheHandler from '@/cacheHandler/GuildCacheHandler';
+import UserCacheHandler from '@/cacheHandler/UserCacheHandler';
 
 async function cooldownHandler(key: string, cooldown: number, interaction: ButtonInteraction | CommandInteraction | MessageComponentInteraction | SelectMenuInteraction): boolean {
   const cooldowns = keyv('cooldowns');
@@ -104,19 +106,26 @@ async function interactionSelectMenu(interaction: SelectMenuInteraction, context
 
 async function interactionHandler(interaction: MessageComponentInteraction) {
   let context: {
-    guildOptions: any
+    guild: any,
+    user: any,
   } = {
-    guildOptions: null,
+    guild: null,
+    user: null,
   };
+
+  // set user
+  const user = await new UserCacheHandler(interaction.user.id).get();
+  if (user) {
+    context.user = user;
+  }
 
   // check for guild
   if (interaction.inGuild()) {
 
-    // get guild options and set if exists
-    const guildOptions = await new GuildOptions(interaction.guildId).get();
-
-    if (guildOptions) {
-      context.guildOptions = guildOptions;
+    // get guild and set if exists
+    const guild = await new GuildCacheHandler(interaction.guildId).get();
+    if (guild) {
+      context.guild = guild;
     }
   }
 
