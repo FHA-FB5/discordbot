@@ -66,17 +66,24 @@ export default async function examHandler( message: Message ) {
     return;
   }
   if ( result === null ) {
-    // message was sent in different channel
+    // message was sent in different channel 
     return;
   }
   if ( result ) {
     try {
       const returnCode = await TelegramBot.sendMessage( message );
-      if ( returnCode === -1 ) {
-        const errorMessage = await sendErrorEmbed( message );
-        errorMessage.delete( deleteOptions );
-      } else {
-        logger.info( 'A message has been send to Telegram feed' );
+      let errorMessage;
+      switch ( returnCode ) {
+        case -1:
+          errorMessage = await sendErrorEmbed( message );
+          errorMessage.delete( deleteOptions );
+          break;
+        case -2:
+          message.react( '🔇' );
+          logger.info( 'Sending message to the Telegram API has been dropped intentionally' );
+          break;
+        default:
+          logger.info( 'A message has been send to Telegram feed' );
       }
     } catch ( error ) {
       logger.error( `Sending message to Telegram Feed failed!\n' + ${error}` );

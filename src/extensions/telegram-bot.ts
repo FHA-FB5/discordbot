@@ -11,7 +11,22 @@ const botConfig = {
 
 const bot = new TelegramBot( environment.telegram_bot_token, botConfig );
 
+const ignorePattern = /--telegram-ignore/gi;
+
 async function sendMessage( msg: Message ): Promise< number > {
+  // evaluate if message should be send
+  let discordMessage = msg.cleanContent;
+  if ( discordMessage.match( ignorePattern ) ) {
+    const splittedMessages = discordMessage.split( ignorePattern );
+    if ( splittedMessages.length > 1 ) {
+      if ( splittedMessages[ 0 ] === '' ) {
+        // message is intended to be ignored
+        return -2;
+      }
+      discordMessage = splittedMessages[ 0 ].trim();
+      msg.react( '🔉' );
+    }
+  }
   // there is no i18n usage here because of only german recipients
   const formattedDate = msg.createdAt
     .toLocaleString(
@@ -28,7 +43,7 @@ async function sendMessage( msg: Message ): Promise< number > {
   const channelName = msg.guild?.channels.cache.get( msg.channel.id )?.name;
   const completeMessage = `Eine neue Anfrage wurde auf dem Discord Server im "${channelName}"-Channel registriert:\n\n`
     + `Nickname: ${msg.author.username}\nUser: ${msg.author.tag}\nID: ${msg.author.id}\nZeitstempel: ${formattedDate} Uhr\n\n`
-    + `Nachricht (${msg.id}):\n\n"${msg.cleanContent}"\n\n`
+    + `Nachricht (${msg.id}):\n\n"${discordMessage}"\n\n`
     + `Folge dem Link, um direkt zur Nachricht zu gelangen:\n${msg.url}`;
   try {
     bot.sendMessage(
