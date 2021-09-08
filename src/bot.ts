@@ -88,7 +88,7 @@ try {
       // eslint-disable-next-line global-require
       const selectMenu = require(`./interactions/selectMenus/${folder}/${file}`);
       logger.log('info', 'load selectMenu', { module: folder, button: selectMenu.default.customId });
-      client.buttons.set(selectMenu.default.customId, selectMenu.default);
+      client.selectMenus.set(selectMenu.default.customId, selectMenu.default);
     }
   }
 } catch (error) {

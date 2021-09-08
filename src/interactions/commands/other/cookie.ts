@@ -3,13 +3,13 @@ import { CommandInteraction } from 'discord.js';
 import { getMessage } from '@/utils';
 
 export default {
-  name: 'ping',
+  name: 'cookie',
   cooldown: 10000,
   defaultPermission: false,
   data: new SlashCommandBuilder()
-    .setName('ping')
-    .setDescription(getMessage('command.other.ping.description')),
+    .setName('cookie')
+    .setDescription(getMessage('command.other.cookie.description')),
   async execute(interaction: CommandInteraction) {
-    await interaction.reply({ content: 'Pong!' });
+    await interaction.reply({ content: getMessage('command.other.cookie.success') });
   },
 };

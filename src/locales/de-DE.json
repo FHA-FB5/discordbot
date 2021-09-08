@@ -1,16 +1,393 @@
 {
   "command": {
     "cooldown": "[0]Bitte warten Sie einen Moment, um diese Aktion erneut durchzuführen.|[1]Bitte warten Sie eine Sekunde, um diese Aktion erneut durchzuführen.|Bitte warten Sie %s Sekunden, um diese Aktion erneut durchzuführen.",
-    
+    "admin": {
+      "botinfo": {
+        "description": "Gibt einem Bot-Administrator verschiedene Informationen über den Bot.",
+        "action": {
+          "description": "Auswahl worüber Informationen ausgegeben werden sollen.",
+          "ping": {
+            "success": "Der Ping des Bots zum Discord (WebServer-Ping) beträgt **{{ping}} ms**."
+          }
+        }
+      },
+      "delete": {
+        "description": "Löscht eine bestimmte Anzahl an Nachrichten aus dem Textchannel.",
+        "success": "Es wurden **{{count}} Nachrichten** aus dem Channel gelöscht.",
+        "error": "Beim Löschen der Nachrichten ist ein Fehler aufgetreten.",
+        "count": {
+          "description": "Anzahl der Nachrichten, die gelöscht werden sollen.",
+          "error": "Bitte wählen Sie eine Zahl zwischen 1 und 99 aus."
+        }
+      },
+      "gameAdmin": {
+        "description": "Administriert die verschiedenen Spiele, die sich ein Nutzer zuweisen kann.",
+        "add": {
+          "description": "Erlaubt das Hinzufügen eines neuen Spiels.",
+          "success": "Das Spiel **{{name}} ({{abbreviation}})** wurde hinzugefügt.",
+          "error": {
+            "duplicate": "Ein Spiel mit diesem Namen existriert bereits.",
+            "role": "Die Rolle für das Spiel konnte nicht erstellt werden."
+          },
+          "name": {
+            "description": "Vollständiger Name des Spiels."
+          },
+          "abbreviation": {
+            "description": "Abkürzung des Spiels."
+          }
+        },
+        "remove": {
+          "description": "Ermöglicht das Löschen eines vorhandenen Spiels.",
+          "success": "Das Spiel wurde gelöscht.",
+          "error": {
+            "noGame": "Die markierte Rolle entspricht keinem Spiel"
+          },
+          "name": {
+            "description": "Rolle des zu entfernenden Spiels."
+          }
+        },
+        "list": {
+          "description": "Listet alle Spiele auf.",
+          "success": "**Folgende Spiele werden unterstützt:**\n{{games}}"
+        }
+      },
+      "moduleAdmin": {
+        "description": "Administriert die Module und Studiengänge.",
+        "add": {
+          "description": "Erlaubt das Hinzufügen eines neuen Moduls oder Studiengangs.",
+          "studyProgram": {
+            "description": "Erlaubt das Hinzufügen eines neuen Studiengangs.",
+            "success": "Der Studiengang **{{name}} ({{abbreviation}})** wurde hinzugefügt.",
+            "error": {
+              "duplicate": "Ein Studiengang mit diesem Namen oder dieser Abkürzung existiert bereits.",
+              "role": "Die Rolle für den Studiengang konnte nicht erstellt werden."
+            },
+            "name": {
+              "description": "Vollständiger Name des Studiengangs."
+            },
+            "abbreviation": {
+              "description": "Abkürzung des Studiengangs."
+            }
+          },
+          "studyProgramModule": {
+            "description": "Erlaubt das Hinzufügen eines neuen Moduls zu einem Studiengang.",
+            "success": "Das Modul **{{name}} ({{abbreviation}})** wurde in der Datenbank gefunden und zum Studiengang **{{studyProgram}}** hinzugefügt.",
+            "successNew": "Das Modul **{{name}} ({{abbreviation}})** wurde in der Datenbank angelegt und zum Studiengang **{{studyProgram}}** hinzugefügt.",
+            "error": {
+              "duplicate": "Ein Modul mit diesem Namen existriert bereits.",
+              "noStudyProgram": "Die markierte Discord-Rolle ist kein Studiengang.",
+              "alreadyAdded": "Das Modul ist bereits zu diesem Studiengang hinzugefügt.",
+              "role": "Die Rolle für das Modul konnte nicht erstellt werden."
+            },
+            "studyProgram": {
+              "description": "Discord-Rolle des Studiengangs, zu dem das Modul hinzugefügt werden soll."
+            },
+            "name": {
+              "description": "Vollständiger Name des Moduls."
+            },
+            "abbreviation": {
+              "description": "Abkürzung des Moduls."
+            },
+            "semester": {
+              "description": "Semester in welchem das Modul belegt wird."
+            }
+          }
+        },
+        "remove": {
+          "description": "Ermöglicht das Löschen eines vorhandenen Moduls oder Studiengangs.",
+          "studyProgram": {
+            "description": "Erlaubt das Löschen eines Studiengangs.",
+            "success": "Der Studiengang **{{name}}** wurde gelöscht.",
+            "error": {
+              "noStudyProgram": "Die markierte Discord-Rolle ist kein Studiengang."
+            },
+            "name": {
+              "description": "Discord-Rolle des Studiengangs, welcher gelöscht werden soll."
+            }
+          },
+          "studyProgramModule": {
+            "description": "Erlaubt das Löschen eines Moduls.",
+            "success": {
+              "studyProgram": "Das Modul **{{name}}** wurde vom Studiengang **{{studyProgram}}** gelöscht.",
+              "studyProgramModule": "Das Modul **{{name}}** wurde komplett gelöscht."
+            },
+            "error": {
+              "noStudyProgram": "Die markierte Discord-Rolle ist kein Studiengang.",
+              "noStudyProgramModule": "Die markierte Discord-Rolle ist kein Modul.",
+              "notMemberOfStudyProgram": "Das Modul ist nicht im Studiengang hinzugefügt."
+            },
+            "name": {
+              "description": "Discord-Rolle des Moduls, welches gelöscht werden soll."
+            },
+            "studyProgram": {
+              "description": "Discord-Rolle des Studiengangs, wenn das Modul nur von einem Studiengang entfernt werden soll."
+            }
+          }
+        },
+        "setup": {
+          "description": "Gibt die Möglichkeit des Setups zur Modulauswahl.",
+          "channel": {
+            "description": "Setzt den Channel zur Studiengang, Semester und Modulauswahl.",
+            "error": {
+              "noStudyPrograms": "Es sind noch keine Studiengänge angelegt."
+            }
+          }
+        },
+        "list": {
+          "description": "Listet alle Module und Studiengänge auf.",
+          "all": {
+            "description": "Listet alle Module und Studiengänge auf.",
+            "success": "**Alle Studiengänge und zugehörige Module:**\n{{programs}}\n**Alle Module:**\n{{modules}}"
+          }
+        }
+      },
+      "selectFirstSemester": {
+        "description": "Verwaltung von Rollen für Erstsemester.",
+        "set": {
+          "description": "Selektiert alle Erstsemester und weißt Ihnen eine Discord-Rolle zu.",
+          "success": "Allen Erstsemestern wurde nun eine Rolle hinzugefügt."
+        },
+        "remove": {
+          "description": "Entfernt die Erstsemester-Rolle und löscht diese im Anschluss.",
+          "success": "Allen Erstsemestern wurde die Rolle entzogen und die Rolle wurde entfernt."
+        }
+      },
+	  "semesterAdmin": {
+		"description": "Administriert die Studiengänge, Semester und Module anderer Nutzer.",
+		"error": {
+		  "userNotInDB": "Der Nutzer konnte nicht in der Datenbank gefunden werden."
+		},
+		"set": {
+		  "description": "Fügt einen Studiengang oder ein Modul zu einem Nutzer hinzu.",
+		  "studyProgram": {
+			"description": "Fügt einem Nutzer einen Studiengang hinzu.",
+			"success": "Dem Nutzer {{userName}} wurde der Studiengang {{studyProgram}} hinzugefügt.",
+			"error": {
+			  "noRole": "Die Discord-Rolle zum Studiengang wurde nicht gefunden.",
+			  "semesterRange": "Das Semester ist außerhalb der möglichen Reichweite.",
+			  "alreadyAdded": "Der Nutzer hat bereits diesen Studiengang.",
+			  "noStudyProgram": "Die Discord-Rolle ist kein Studiengang."
+			},
+			"user": {
+			  "description": "Nutzer, welchem der Studiengang hinzugefügt werden soll."
+			},
+			"name": {
+			  "description": "Discord-Rolle des Studiengangs."
+			},
+			"semester": {
+			  "description": "Semester, in welchem sich der Nutzer befindet."
+			}
+		  },
+		  "studyProgramModule": {
+			"description": "Fügt einem Nutzer ein Modul hinzu.",
+			"success": "Dem Nutzer {{userName}} wurde das Modul {{studyProgramModule}} hinzugefügt.",
+			"error": {
+			  "noRole": "Die Discord-Rolle zum Modul wurde nicht gefunden.",
+			  "alreadyAdded": "Der Nutzer hat bereits dieses Modul.",
+			  "noStudyProgram": "Die Discord-Rolle ist kein Modul."
+			},
+			"user": {
+			  "description": "Nutzer, welchem das Modul hinzugefügt werden soll."
+			},
+			"name": {
+			  "description": "Discord-Rolle des Moduls."
+			}
+		  }
+		},
+		"remove": {
+		  "description": "Entfernt einen Studiengang oder ein Modul von einem Nutzer.",
+		  "studyProgram": {
+			"description": "Entfernt einem Nutzer einen Studiengang.",
+			"success": "Dem Nutzer {{userName}} wurde der Studiengang {{studyProgram}} entfernt.",
+			"error": {
+			  "noRole": "Die Discord-Rolle zum Studiengang wurde nicht gefunden.",
+			  "notAdded": "Der Nutzer hat diesen Studiengang nicht hinzugefügt.",
+			  "noStudyProgram": "Die Discord-Rolle ist kein Studiengang."
+			},
+			"user": {
+			  "description": "Nutzer, welchem der Studiengang entfernt werden soll."
+			},
+			"name": {
+			  "description": "Discord-Rolle des Studiengangs."
+			}
+		  },
+		  "studyProgramModule": {
+			"description": "Entferne einem Nutzer ein Modul.",
+			"success": "Dem Nutzer {{userName}} wurde das Modul {{studyProgramModule}} entfernt.",
+			"error": {
+			  "noRole": "Die Discord-Rolle zum Modul wurde nicht gefunden.",
+			  "notAdded": "Der Nutzer hat dieses Modul nicht hinzugefügt.",
+			  "noStudyProgram": "Die Discord-Rolle ist kein Modul."
+			},
+			"user": {
+			  "description": "Nutzer, von welchem das Modul entfernt werden soll."
+			},
+			"name": {
+			  "description": "Discord-Rolle des Moduls."
+			}
+		  }
+		},
+		"list": {
+		  "description": "Listet alle Studiengänge und Module eines Nutzers auf.",
+		  "all": {
+			"description": "Listet alle Studiengänge und Module eines Nutzers auf.",
+			"success": "Daten zum Nutzer {{userName}}:\n\n**Studiengänge:**\n{{studyPrograms}}\n**Module**\n{{studyProgramModules}}",
+			"user": {
+			  "description": "Nutzer, von wem alle Informationen angezeigt werden sollen."
+			}
+		  }
+		}
+	  }
+    },
     "dev": {
       "devInit": {
         "description": "Initialisiert den Server im Bot.",
         "success": "Der Server wurde erfolgreich initialisiert."
+      },
+      "deleteCommands": {
+        "description": "Löscht alle auf diesem Server festgelegten Commands.",
+        "success": "Alle Commands, die auf diesem Server initialisiert waren, wurden gelöscht."
       }
     },
     "other": {
+      "coin": {
+        "description": "Wirft eine Münze.",
+        "success": "Du hast **{{type}}**!"
+      },
+      "cookie": {
+        "description": "Schenkt dir einen Keks.",
+        "success": ":cookie:"
+      },
+      "game": {
+        "description": "Rollen für Spiele entfernen und setzen.",
+        "error": {
+          "noGames": "Auf diesem Server sind noch keine Spiele angelegt oder du hast schon alle zu deinem Profil hinzugefügt.",
+          "noGamesAdded": "Sie haben noch kein Spiel zu Ihrem Benutzerkonto hinzugefügt welches Sie entfernen könnten."
+        },
+        "set": {
+          "description": "Eine Spiele-Rolle setzen.",
+          "success": "Wählen Sie aus dem Dropdown Menü unten die Spiele aus, welche sie hinzufügen möchten."
+        },
+        "remove": {
+          "description": "Eine Spiele-Rolle entfernen.",
+          "success": "Wählen Sie aus dem Dropdown Menü die Spiele aus, welche Sie entfernen möchten."
+        }
+      },
+      "help": {
+        "description": "Sendet eine Command-Hilfe",
+        "title": "/coin -> Wirf eine Münze\n/game set -> Füge ein Spiel zu deinem Nutzer hinzu\n/game remove -> Entferne ein Spiel von deinem Nutzer\n/help -> Liste diese Hilfe auf\n/info -> Erhalte Informationen zu Institutionen der FH\n/image-movie -> Imagefilm der FH\n/ping -> Sendet einen Ping an den Server\n/quartus -> Informationen zur Software Quartus\n/stats -> Mitgliederstatistiken des Servers\n/visual-studio -> Informationen zur Software Visual Studio",
+        "text": "Hilfe"
+      },
+      "imageMovie": {
+        "description": "Zeigt den Imagefilm der FH-Aachen"
+      },
+      "info": {
+        "description": "Gibt Informationen zu verschiedenen Institutionen und Bereichen der FH.",
+        "target": {
+          "description": "Auswahl zu welchem Bereich Informationen gezeigt werden sollen.",
+          "fsr": {
+            "text": "Der Fachschaftsrat (kurz FSR) ist die Studierendenvertretung am Fachbereich. Dieser wird jährlich bei den Hochschulwahlen von allen Studierenden des Fachbereichs neu gewählt und hat maximal neun Sitze. Unsere Aufgabe ist es, dir bei allen Anliegen weiterzuhelfen. Falls wir mal nicht helfen können, wissen wir, wer das kann und leiten dich dann an die entsprechende Stelle weiter. Das bedeutet, dass du mit jedem Problem direkt zu uns kommen kannst – wir haben uns für dieses Gremium aufgestellt, weil wir dir helfen möchten, dafür musst du nur auf uns zukommen. Alle zwei Wochen finden unsere Sitzungen statt. Bei diesen Treffen diskutieren wir über relevante Themen für uns Studierende, vergeben Arbeitsaufträge und gründen Ausschüsse um diese zu erledigen. Die Sitzungen sind öffentlich, d.h. wenn du dir mal anschauen möchtest worum es bei so einer Sitzung geht, kannst du gerne vorbeikommen und mitdiskutieren. Zu unseren Hauptaufgaben gehört das Organisieren und Durchführen der Orientierungswoche und dem Erstsemestereinführungsseminar.", 
+            "title": "Fachschaftsrat"
+          },
+          "esp": {
+            "text": "Das Erstsemesterprojekt der FH Aachen (kurz ESP) ist ein studentisches Projekt, dass sich primär um die Schulung der Erstsemestertutoren kümmert. Zusätzlich bietet es einen Geräteverleih für Studierende an. Hier werden unter anderem Beamer, Kameras, Musikanlagen, Lichtanlagen, Seifenblasen-/Nebelmaschinen, Pavillons, Grills und vieles mehr verliehen.", 
+            "title": "Erstsemesterprojekt"
+          },
+          "asta": {
+            "text": "Der allgemeine Studierendenausschuss (kurz AStA) ist die Exekutive in der studentischen Selbstverwaltung und wird jährlich vom Studierendenparlament gewählt. In seiner Rolle als Sprachrohr für die Studierendenschaft der FH Aachen arbeitet er daran, die Studienbedingungen für euch zu verbessern. Der AStA selbst, gliedert sich in diverse Referate und bietet ein breites Angebot für die Studierendenschaft. Beispielsweise kann man hier eine kostenlose Rechtsberatung oder die Prüfungsordnungsberatung in Anspruch nehmen. Weitere Informationen findet ihr auf der", 
+            "title": "Allgemeiner Studierendenausschuss"
+          },
+          "campusoffice": {
+            "text": "CampusOffice ist ein Organizer mit dem du deinen Studienverlauf planst. Dort findest du die Module entsprechend der Prüfungsordnung, in der du eingeschrieben bist. Dementsprechend kannst du deine Vorlesungen, Übungen, Praktika und sonstige Veranstaltungen in deinen Stundenplan eintragen und dir diese Termine z.B. in der Wochenansicht anzeigen lassen. Wenn du möchtest, kannst du den Stundenplan auch exportieren und in deinen eigenen Kalender eintragen. So verlierst du nicht die Übersicht bei den Terminen deiner Veranstaltungen.Dazu kommt, dass hier auch die Praktikumsplätze vergeben werden. Sobald der Anmeldezeitraum freigeschaltet ist kannst du den gewünschten Termin angeben und bist dann dafür eingetragen. Hierbei musst du beachten, dass die Plätze begrenzt sind. Das bedeutet, dass du rechtzeitig online sein musst, um diese anzumelden. Im schlimmsten Fall ist dein Wunschtermin schon vergeben, sodass du einen anderen Zeitslot nehmen musst. Falls du neben dem Studium arbeitest oder andere Verpflichtungen hast, solltest du also sehr genau auf die Wahl der Termine achten.",
+            "title": "CampusOffice"
+          },
+          "qis": {
+            "text": "QIS wird primär dazu verwendet Klausuren an- oder abzumelden. Hierbei musst du unbedingt die Fristen beachten. Du erhältst immer eine E-Mail zur Bestätigung, ob die An- oder Abmeldung geklappt hat! Den Aushang dazu findest du vor dem Prüfungsamt. Außerdem kannst du hier administrative Angelegenheiten erledigen, wie deine Anschrift zu ändern oder dein Gebührenkonto zu prüfen, d.h. ob du den Semesterbeitrag bereits überwiesen hast und das Geld schon auf dem Konto der Hochschule eingegangen ist.Falls du eine Studienbescheinigung für die Klausuren, die Krankenkasse oder das BAföGAmt brauchst oder mit dem Auto zur FH kommen und den Parkausweis drucken möchtest, kannst du das auch im QIS machen. Deinen Notenspiegel kannst du hier ebenfalls einsehen.",
+            "title": "QIS"
+          },
+          "services": {
+            "text": "Auf der Services-Seite kannst du deinen Benutzerstatus und deine Kontaktdaten einsehen und ändern, Informationen zu deiner FH Karte einholen und diese aktivieren oder sperren lassen. Unter dem Punkt Benutzerstatus siehst du beispielsweise deine Benutzerdaten und Infos zum ASEAG eTicket. Falls du deine Login-Daten vergessen haben solltest, kannst du diese hier wieder zurücksetzen.", 
+            "title": "Services"
+          },
+          "ilias": {
+            "text": "ILIAS ist eine Lernplattform. In der Regel erhältst du nach einer Kursanmeldung im CampusOffice automatisch Zugriff auf Kursinhalte im ILIAS. Dazu zählen Vorlesungen, Übungen, Termine oder auch Praktikumsunterlagen und Anforderungen. Sollte das nicht der Fall sein, gibt es andere Wege, um Zugriff zu erhalten. Meistens wird so etwas dann in der ersten Vorlesung besprochen, ansonsten fragst du nach oder schickst eine E-Mail.Es empfiehlt sich, regelmäßig zu prüfen, ob neue Unterlagen hochgeladen worden sind. Außerdem kann ILIAS dazu genutzt werden kursspezifische E-Mails zu lesen oder den Kalender für anstehende Termine zu nutzen.",
+            "title": "Ilias"
+          },
+          "bib": {
+            "text": "Unsere Bibliothek bietet eine große Sammlung an Büchern und e-Books und befindet sich im Erdgeschoss des E-Gebäudes. Hier kannst du nicht nur in Büchern nachschlagen oder den Druckservice nutzen, sondern kannst auch in Ruhe lernen. Grundsätzlich ist die Nutzung der Bibliothek kostenlos. Gebühren werden nur erhoben, wenn du die Leihfrist überschreitest, die Fernleihe nutzt oder die Medien verlierst. Falls es mal ein Buch nicht gibt, du das aber unbedingt brauchst, kannst du es in der Bibliothek kostenfrei bestellen lassen.In der Bibliothek gibt es auch den IT-Helpdesk, falls du z.B. Probleme mit dem WLAN hast. Außerdem kannst du dir auch einen Spint mieten.",
+            "title": "Bibliothek"
+          },
+          "video": {
+            "text": "Das Video-Portal ist eine Plattform auf der du, falls aufgezeichnet, Vorlesungen im Videoformat nachholen kannst. Ob die Vorlesung aufgezeichnet wird, hängt von der lehrenden Person ab.", 
+            "title": "Video (früher Electures)"
+          },
+          "testat": {
+            "text": "In der Testatverwaltung kannst du deine Praktikumstestate online verwalten. Die Module werden dort automatisch eingetragen und die Praktikumsbetreuer harken die jeweiligen Testate des Moduls für dich ab. Ob das System in einem Modul verwendet wird hängt von der jeweils lehrenden Person ab.", 
+            "title": "Testatverwaltung"
+          },
+          "email": {
+            "text": "Du solltest die E-Mail, welche du von der FH erhalten hast, immer im Blick behalten, da du dort wichtige Informationen bekommst. Du kannst sie einfach im Webmail Client nutzen oder zu einem Mail-Client wie Outlook oder Thunderbird hinzufügen. Eine Anleitung dazu findest du auf der Seite der Datenverarbeitungszentrale (DVZ).", 
+            "title": "E-Mail"
+          },
+          "vpn": {
+            "text": "Es wird hin und wieder vorkommen, dass du z.B. für verschiedene Module Arbeiten hochladen musst. Dies ist aber oftmals nur aus dem FH Aachen-Netz möglich. Um es dir bequemer zu gestalten kannst du dir auch einen VPN einrichten, damit du mit jeder Internetverbindung Zugang zu dem FH Aachen-Netz hast. Zudem ist es möglich die PDF-Versionen von verschiedenen Lehrbüchern über das FH Aachen-Netz kostenlos herunterzuladen, sodass man sich nicht zwingend das Buch kaufen muss. Über das FH Aachen Netz hast du außerdem kostenlos Zugriff auf die Statistikplattform Statista.", 
+            "title": "VPN"
+          },
+          "erstireader": {
+            "text": "Im sogenannten Ersti-Reader bekommst du als Erstsemester viele Einblicke in Begrifflichkeiten und Abläufe an der FH Aachen. Dort kannst du immer nachschauen wenn du eine Frage zu etwas hast.", 
+            "title": "Ersti-Reader"
+          },
+          "discordbot": {
+            "title": "Discord-Bot",
+            "text": "Dies ist der Discord-Bot des Fachschaftsrates des Fachbereichs Elekto- und Informationstechnik (FB5) der Fachhochschule Aachen.",
+            "github": {
+              "title": "GitHub-Repository",
+              "text": "https://github.com/FHA-FB5/discordbot/"
+            },
+            "copyright": {
+              "title": "Copyright",
+              "text": "Contributors: Titus Kirch, Patrik Scholke, Simon Ostendorf\n© 2021 Fachschaftsrat FB5."
+            }
+          }
+        }
+      },
       "ping": {
         "description": "Sendet einen Ping an den Server."
+      },
+      "quartus": {
+        "description": "Informationen zur Installation von Quartus für das Erstsemestermodul Theoretische Informatik.",
+        "title": "Quartus ist ein Programm, welches du für das Praktikum des Erstsemestermoduls Theoretische Informatik benötigst.", 
+        "text": "Quartus"
+      },
+      "stats": {
+        "description": "Gibt Auskünfte über die Anzahl der Personen auf dem Discord.",
+        "success": "**Mitgliederverteilung:**\n{{counts}}"
+      },
+      "visualStudio": "Informationen zur Installation von Visual Studio für das Erstsemestermodul GIP.",
+      "title": "Visual Studio ist eine Entwicklungsumgebung von Microsoft, welche du durch die FH kostenlos installieren kannst. Du brauchst sie zum Beispiel für das Erstsemestermodul Grundlagen der Informatik (GIP).", 
+      "text": "Visual Studio"
+    },
+    "secret": {
+      "error": {
+        "description": "Error heißt...",
+        "success": "Claßen: Error heißt ich weigere mich!"
+      },
+      "hoever": {
+        "description": "Es gibt nur einen Georg Hoever!"
+      },
+      "matheIstMagic": {
+        "description": "Mathe ist magic!",
+        "success": "Und wie Sie sehen, es funktioniert auf magische Weise. **Magic Mathe!**"
+      },
+      "matheIstToll": {
+        "description": "Mathe ist toll!",
+        "success": "Mathe ist **Magic**!"
+      },
+      "mathemann": {
+        "description": "Ich liebe dich Mathemann!"
+      },
+      "mayonnaise": {
+        "description": "Ist Mayonnaise auch ein Instrument?"
       }
     }
   },
@@ -22,13 +399,51 @@
       "title": "Info"
     },
     "success": {
-      "title": "Successful"
+      "title": "Erfolgreich"
     },
     "warning": {
       "title": "Warnung"
     }
   },
+  "selectMenu": {
+    "noOptionSelected": "Keine Option ausgewählt",
+    "other": {
+      "game": {
+        "set": {
+          "success": "Die Spiele \n{{games}} wurden hinzugefügt.",
+          "error": {
+            "role": "Die Discord-Rolle zum Spiel konnte nicht gefunden werden."
+          }
+        },
+        "remove": {
+          "success": "Die Spiele \n{{games}} wurden entfernt.",
+          "error": {
+            "role": "Die Discord-Rolle zum Spiel konnte nicht gefunden werden."
+          }
+        }
+      }
+    },
+	"chooseSemester": {
+	  "start": {
+		  "message": "Hier können Sie Ihr Semester auswählen.\nUm zu Starten, wählen Sie unten Ihren Studiengang aus."
+	  },
+	  "studyProgram": {
+      "success": "Sie haben **{{studyProgram}}** als Studiengang ausgewählt. Bitte wählen Sie nun Ihr Fachsemester.",
+      "noModules": "Es wurden für diesen Studiengang noch keine Module angelegt oder hinzugefügt.",
+      "noRole": "Die Rolle für den Studiengang konnte nicht gefunden werden."
+	  },
+	  "semester": {
+		  "success": "Sie haben das **{{semester}}. Semester** als Ihr Fachsemester ausgewählt. Bitte wählen Sie nun Ihre belegten Module aus."
+	  },
+      "modules": {
+        "success": "Sie haben die Module\n**{{modules}}** ausgewählt. Die Semesterzuordnung ist damit abgeschlossen. Vielen Dank.",
+        "noRole": "Die Rolle für das Modul konnte nicht gefunden werden.",
+        "notFound": "Das Modul konnte nicht mehr in der Datenbank gefunden werden."
+	    }
+	  }
+  },
   "error": {
-    "unknown": "Es ist ein unbekannter Fehler aufgetreten!"
+    "unknown": "Es ist ein unbekannter Fehler aufgetreten!",
+    "guildIsNull": "Der Server wurde noch nicht initialisiert. Diese Funktion kann noch nicht verwendet werden."
   }
 }

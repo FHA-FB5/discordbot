@@ -3,13 +3,13 @@ import { CommandInteraction } from 'discord.js';
 import { getMessage } from '@/utils';
 
 export default {
-  name: 'ping',
+  name: 'mathe-ist-magic',
   cooldown: 10000,
   defaultPermission: false,
   data: new SlashCommandBuilder()
-    .setName('ping')
-    .setDescription(getMessage('command.other.ping.description')),
+    .setName('mathe-ist-magic')
+    .setDescription(getMessage('command.secret.matheIstMagic.description')),
   async execute(interaction: CommandInteraction) {
-    await interaction.reply({ content: 'Pong!' });
+    await interaction.reply({ content: getMessage('command.secret.matheIstMagic.success') });
   },
 };

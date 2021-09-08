@@ -6,7 +6,7 @@ export default class UserCacheHandler extends AbstractCacheHandler {
 
   model = User;
 
-  identifier = 'userId';
+  identifier = 'userID';
 
   namespace = 'users';
 

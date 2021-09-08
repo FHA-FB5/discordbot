@@ -10,7 +10,8 @@
     "start": "node -r dotenv/config dist/index",
     "start:deployCommands": "node -r dotenv/config dist/deployCommands",
     "start:watch": "nodemon -r dotenv/config dist/index",
-    "eslint": "npx eslint 'src/**.ts'"
+    "eslint": "npx eslint 'src/**.ts'",
+    "buildAndStart": "npm run eslint && npm run build && npm run start"
   },
   "keywords": [],
   "author": "",
