@@ -23,7 +23,9 @@ export default {
           upsert: true,
           setDefaultsOnInsert: true,
         }, (error) => {
-          logger.log('error', 'command.dev.devInit guild.findOneAndUpdate', error);
+          if (error) {
+            logger.log('error', 'command.dev.devInit guild.findOneAndUpdate', error);
+          }
         });
 
         await interaction.reply({
