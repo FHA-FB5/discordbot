@@ -99,21 +99,30 @@ export default {
         //TODO
         //TODO
 
+        // get highest semester
+        let highestSemesterInt = 1;
+        highestSemester.modules.forEach((module: any) => {
+          if (module.semester > highestSemesterInt) {
+            highestSemesterInt = module.semester;
+          }
+        });
+
         //add possible semesters to the menu
-        for (let i = 1; i <= highestSemester.modules[0].semester; i++) {
+        for (let i = 1; i <= highestSemesterInt; i++) {
           semesterMenu.default.data.addOptions({
             value: selectedStudyProgram._id + '__' + i.toString(),
             label: i + '. Semester',
           });
         }
-        
+
         const menuRow = new MessageActionRow();
         menuRow.addComponents(semesterMenu.default.data);
 
-        interaction.reply({ 
-          embeds: [new SuccessMessageEmbed({ 
+        interaction.reply({
+          embeds: [new SuccessMessageEmbed({
             description: getMessage('selectMenu.chooseSemester.studyProgram.success', { parameter: { studyProgram: selectedStudyProgram.name } }),
-          })], components: [menuRow], ephemeral: true });
+          })], components: [menuRow], ephemeral: true,
+        });
         semesterMenu.default.data.options = [];
       } else {
         await interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('selectMenu.chooseSemester.studyProgram.noModules') })] });

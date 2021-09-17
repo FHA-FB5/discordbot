@@ -37,21 +37,16 @@ export default {
           //DELETE NOT WORKING
 
           //remove games from user
-          User.findOneAndUpdate({
+          await User.findOne({
             _id: context.user._id,
-          }, {
-            'guilds.$[elem]': {
-              $pull: {
-                games: game._id,
-              },
-            },
-          }, {
-            arrayFilters: [
-              {
-                'elem.guild': context.guild,
-              },
-            ],
-          }).exec();
+          }, function (err: any, result: any) {
+            result.guilds.forEach(function (guild: any) {
+              if (guild.guild == context.guild._id) {
+                guild.games.pull(game._id);
+              }
+            });
+            result.save();
+          });
 
           //remove role from user
           if (interaction.member instanceof GuildMember) {

@@ -1,4 +1,4 @@
-import { ButtonInteraction, CommandInteraction, GuildMember, MessageComponentInteraction, SelectMenuInteraction } from 'discord.js';
+import { ButtonInteraction, CommandInteraction, GuildMember, MessageComponentInteraction, Permissions, SelectMenuInteraction } from 'discord.js';
 import { getMessage, keyv, logger } from '@/utils';
 import { InfoMessageEmbed } from '@/embeds';
 import GuildCacheHandler from '@/cacheHandler/GuildCacheHandler';
@@ -126,7 +126,7 @@ async function createUser(user: any, member: GuildMember, thisGuild: any) {
             guild: thisGuild,
           },
         },
-      }).exec(); 
+      }).exec();
     }
     //TODO
     //TODO
@@ -148,7 +148,7 @@ async function createUser(user: any, member: GuildMember, thisGuild: any) {
     //TODO
     //TODO
     //UPDATE NOT UNIQUE
-    
+
   } else {
     //create user and insert guild
     const newUser = new User({

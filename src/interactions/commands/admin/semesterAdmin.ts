@@ -11,10 +11,10 @@ export default {
   data: new SlashCommandBuilder()
     .setName('semester-admin')
     .setDescription(getMessage('command.admin.semesterAdmin.description'))
-    .addSubcommandGroup(group => 
+    .addSubcommandGroup(group =>
       group.setName('set')
         .setDescription(getMessage('command.admin.semesterAdmin.set.description'))
-        .addSubcommand(cmd => 
+        .addSubcommand(cmd =>
           cmd.setName('study-program')
             .setDescription(getMessage('command.admin.semesterAdmin.set.studyProgram.description'))
             .addUserOption(option =>
@@ -29,7 +29,7 @@ export default {
               option.setName('semester')
                 .setDescription(getMessage('command.admin.semesterAdmin.set.studyProgram.semester.description'))
                 .setRequired(true)))
-        .addSubcommand(cmd => 
+        .addSubcommand(cmd =>
           cmd.setName('study-program-module')
             .setDescription(getMessage('command.admin.semesterAdmin.set.studyProgramModule.description'))
             .addUserOption(option =>
@@ -40,10 +40,10 @@ export default {
               option.setName('name')
                 .setDescription(getMessage('command.admin.semesterAdmin.set.studyProgramModule.name.description'))
                 .setRequired(true))))
-    .addSubcommandGroup(group => 
+    .addSubcommandGroup(group =>
       group.setName('remove')
         .setDescription(getMessage('command.admin.semesterAdmin.remove.description'))
-        .addSubcommand(cmd => 
+        .addSubcommand(cmd =>
           cmd.setName('study-program')
             .setDescription(getMessage('command.admin.semesterAdmin.remove.studyProgram.description'))
             .addUserOption(option =>
@@ -54,7 +54,7 @@ export default {
               option.setName('name')
                 .setDescription(getMessage('command.admin.semesterAdmin.remove.studyProgram.name.description'))
                 .setRequired(true)))
-        .addSubcommand(cmd => 
+        .addSubcommand(cmd =>
           cmd.setName('study-program-module')
             .setDescription(getMessage('command.admin.semesterAdmin.remove.studyProgramModule.description'))
             .addUserOption(option =>
@@ -127,9 +127,17 @@ export default {
                       _id: studyProgramSet._id,
                     }).sort({ 'modules.semester': 'desc' }).exec();
 
+                    // get highest semester
+                    let highestSemesterSetInt = 1;
+                    highestSemesterSet.modules.forEach((module: any) => {
+                      if (module.semester > highestSemesterSetInt) {
+                        highestSemesterSetInt = module.semester;
+                      }
+                    });
+
                     //check if entered semester fits to the studyProgram
                     const semesterSet = interaction.options.getInteger('semester');
-                    if (semesterSet && semesterSet > 0 && semesterSet <= highestSemesterSet.modules[0].semester) {
+                    if (semesterSet && semesterSet > 0 && semesterSet <= highestSemesterSetInt) {
 
                       //add role to user
                       const studyProgramRole = await interaction.guild?.roles.fetch(studyProgramSet.roleId);
@@ -173,12 +181,12 @@ export default {
                 const studyProgramModuleSet = await StudyProgramModule.findOne({
                   roleId: interaction.options.getRole('name')?.id,
                 });
-  
+
                 //check if studyProgram exists
                 if (studyProgramModuleSet) {
                   //check if user has already this studyProgramModule
                   if (!userGuildEntrySet.studyProgramModules.some((element: any) => element._id.toString() == studyProgramModuleSet._id.toString())) {
-                    
+
                     //add role to user
                     const studyProgramModuleRole = await interaction.guild?.roles.fetch(studyProgramModuleSet.roleId);
                     if (studyProgramModuleRole) {
@@ -201,7 +209,7 @@ export default {
                         },
                       ],
                     }).exec();
-  
+
                     await interaction.reply({ embeds: [new SuccessMessageEmbed({ description: getMessage('command.admin.semesterAdmin.set.studyProgramModule.success', { parameter: { studyProgramModule: studyProgramModuleSet.name, userName: member.nickname } }) })] });
                   } else {
                     await interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('command.admin.semesterAdmin.set.studyProgramModule.error.alreadyAdded') })] });
@@ -222,7 +230,7 @@ export default {
                 const studyProgramRemove = await StudyProgram.findOne({
                   roleId: interaction.options.getRole('name')?.id,
                 });
-  
+
                 //check if studyProgram exists
                 if (studyProgramRemove) {
                   //check if user has this studyProgram
@@ -234,7 +242,7 @@ export default {
                     } else {
                       return interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('command.admin.semesterAdmin.remove.studyProgram.error.noRole') })] });
                     }
-                    
+
                     //Remove study program for user
                     await User.findOneAndUpdate({
                       _id: user._id,
@@ -251,7 +259,7 @@ export default {
                         },
                       ],
                     }).exec();
-  
+
                     await interaction.reply({ embeds: [new SuccessMessageEmbed({ description: getMessage('command.admin.semesterAdmin.remove.studyProgram.success', { parameter: { studyProgram: studyProgramRemove.name, userName: member.nickname } }) })] });
                   } else {
                     await interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('command.admin.semesterAdmin.remove.studyProgram.error.notAdded') })] });
@@ -265,7 +273,7 @@ export default {
                 const studyProgramModuleRemove = await StudyProgramModule.findOne({
                   roleId: interaction.options.getRole('name')?.id,
                 });
-    
+
                 //check if studyProgramModule exists
                 if (studyProgramModuleRemove) {
                   //check if user has this studyProgramModule
@@ -277,22 +285,18 @@ export default {
                     } else {
                       return interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('command.admin.semesterAdmin.remove.studyProgramModule.error.noRole') })] });
                     }
-                    
-                    //remove studyProgramModule for user
-                    await User.findOneAndUpdate({
+
+                    await User.findOne({
                       _id: user._id,
-                    }, {
-                      $pull: {
-                        'guilds.$[elem].studyProgramModules': studyProgramModuleRemove,
-                      },
-                    }, {
-                      arrayFilters: [
-                        {
-                          'elem.guild': context.guild,
-                        },
-                      ],
-                    }).exec();
-    
+                    }, function (err: any, result: any) {
+                      result.guilds.forEach(function (guild: any) {
+                        if (guild.guild == context.guild._id) {
+                          guild.studyProgramModules.pull(studyProgramModuleRemove);
+                        }
+                      });
+                      result.save();
+                    });
+
                     await interaction.reply({ embeds: [new SuccessMessageEmbed({ description: getMessage('command.admin.semesterAdmin.remove.studyProgramModule.success', { parameter: { studyProgramModule: studyProgramModuleRemove.name, userName: member.nickname } }) })] });
                   } else {
                     await interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('command.admin.semesterAdmin.remove.studyProgramModule.error.notAdded') })] });
