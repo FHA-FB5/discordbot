@@ -28,6 +28,12 @@ export default new Schema({
           ref: 'StudyProgramModule',
         },
       ],
+      games: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Game',
+        },
+      ],
     },
   ],
 }, {

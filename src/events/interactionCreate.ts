@@ -1,10 +1,11 @@
-import { ButtonInteraction, CommandInteraction, MessageComponentInteraction, SelectMenuInteraction } from 'discord.js';
-import { getMessage, GuildOptions, keyv, logger } from '@/utils';
+import { ButtonInteraction, CommandInteraction, GuildMember, MessageComponentInteraction, SelectMenuInteraction } from 'discord.js';
+import { getMessage, keyv, logger } from '@/utils';
 import { InfoMessageEmbed } from '@/embeds';
 import GuildCacheHandler from '@/cacheHandler/GuildCacheHandler';
 import UserCacheHandler from '@/cacheHandler/UserCacheHandler';
+import { User } from '@/models';
 
-async function cooldownHandler(key: string, cooldown: number, interaction: ButtonInteraction | CommandInteraction | MessageComponentInteraction | SelectMenuInteraction): boolean {
+async function cooldownHandler(key: string, cooldown: number, interaction: ButtonInteraction | CommandInteraction | MessageComponentInteraction | SelectMenuInteraction): Promise<boolean> {
   const cooldowns = keyv('cooldowns');
   const cooldownResponses = keyv('cooldownResponses');
 
@@ -104,6 +105,62 @@ async function interactionSelectMenu(interaction: SelectMenuInteraction, context
   }
 }
 
+async function createUser(user: any, member: GuildMember, thisGuild: any) {
+  //Check if user exists
+  if (user) {
+    //Insert guild inside user (only ifr not existent (addToSet looks if its unique))
+    const guildInsert = await User.findOne({
+      _id: user._id,
+      guilds: {
+        $elemMatch: {
+          guild: thisGuild._id,
+        },
+      },
+    });
+    if (!guildInsert) {
+      User.findOneAndUpdate({
+        _id: user._id,
+      }, {
+        $addToSet: {
+          guilds: {
+            guild: thisGuild,
+          },
+        },
+      }).exec(); 
+    }
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //TODO
+    //UPDATE NOT UNIQUE
+    
+  } else {
+    //create user and insert guild
+    const newUser = new User({
+      userID: member.id,
+      guilds: {
+        guild: thisGuild,
+      },
+    });
+    newUser.save();
+  }
+}
+
 async function interactionHandler(interaction: MessageComponentInteraction) {
   let context: {
     guild: any,
@@ -127,6 +184,11 @@ async function interactionHandler(interaction: MessageComponentInteraction) {
     if (guild) {
       context.guild = guild;
     }
+  }
+
+  //Create or update user object inside database
+  if (context.guild && interaction.inGuild() && interaction.member instanceof GuildMember) {
+    createUser(user, interaction.member, context.guild);
   }
 
   // check interaction and try to execute

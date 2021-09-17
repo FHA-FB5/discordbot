@@ -3,13 +3,13 @@ import { CommandInteraction } from 'discord.js';
 import { getMessage } from '@/utils';
 
 export default {
-  name: 'ping',
+  name: 'mathemann',
   cooldown: 10000,
   defaultPermission: false,
   data: new SlashCommandBuilder()
-    .setName('ping')
-    .setDescription(getMessage('command.other.ping.description')),
+    .setName('mathemann')
+    .setDescription(getMessage('command.secret.mathemann.description')),
   async execute(interaction: CommandInteraction) {
-    await interaction.reply({ content: 'Pong!' });
+    await interaction.reply({ content: 'https://youtu.be/EVXfOATpgO0?t=68' });
   },
 };
