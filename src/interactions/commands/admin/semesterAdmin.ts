@@ -321,7 +321,8 @@ export default {
 
                 //add all modules to the message
                 let studyProgramModulesMessage: string = '';
-                userGuildEntrySet.studyProgramModules.forEach((element: any) => {
+                let studyProgramModules = await StudyProgramModule.find({ _id: { $in: userGuildEntrySet.studyProgramModules } }).exec();
+                studyProgramModules.forEach((element: any) => {
                   studyProgramModulesMessage += '    - ' + element.name + '\n';
                 });
 
