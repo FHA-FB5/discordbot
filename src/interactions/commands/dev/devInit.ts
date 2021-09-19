@@ -1,8 +1,9 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { CommandInteraction } from 'discord.js';
+import { CommandInteraction, GuildApplicationCommandPermissionData } from 'discord.js';
 import { getMessage, logger } from '@/utils';
 import { Guild } from '@/models';
 import { SuccessMessageEmbed } from '@/embeds';
+import commandsOwnerHasPermissionOnDefaultIDs from '@/../commandsOwnerHasPermissionOnDefaultIDs.json';
 
 export default {
   name: 'dev-init',
@@ -27,6 +28,27 @@ export default {
             logger.log('error', 'command.dev.devInit guild.findOneAndUpdate', error);
           }
         });
+
+        // build owner permissions
+        if (commandsOwnerHasPermissionOnDefaultIDs) {
+          const fullPermissions: GuildApplicationCommandPermissionData[] = [];
+          commandsOwnerHasPermissionOnDefaultIDs.forEach((id: string) => {
+            fullPermissions.push({
+              id,
+              permissions: [{
+                id: guild.ownerId,
+                type: 'USER',
+                permission: true,
+              }],
+            });
+          });
+
+          if (fullPermissions) {
+            guild.commands.permissions.set({
+              fullPermissions,
+            });
+          }
+        }
 
         await interaction.reply({
           embeds: [new SuccessMessageEmbed({ description: getMessage('command.dev.devInit.success') })],
