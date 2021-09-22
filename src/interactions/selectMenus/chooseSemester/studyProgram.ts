@@ -32,38 +32,18 @@ export default {
       //TODO
       //TODO
       //TODO
+
       await User.findOne({
         _id: context.user._id,
       }, async function (err: any, result: any) {
         await result.guilds.forEach(async function (guild: any) {
           if (guild.guild == context.guild._id) {
-            const studyPrograms = await StudyProgram.find({
-              _id: { $in: guild.studyPrograms },
-            }).exec();
-            studyPrograms.forEach((studyProgram: any) => {
-              if (interaction.member instanceof GuildMember) {
-                interaction.member?.roles.remove(studyProgram.roleId);
-              }
-            });
-
-            const studyProgramModules = await StudyProgramModule.find({
-              _id: { $in: guild.studyProgramModules },
-            }).exec();
-            studyProgramModules.forEach((studyProgramModule: any) => {
-              if (interaction.member instanceof GuildMember) {
-                interaction.member?.roles.remove(studyProgramModule.roleId);
-              }
-            });
-
             guild.studyPrograms = [];
             guild.studyProgramModules = [];
+            guild.save();
           }
         });
-        result.save();
       });
-
-
-
 
       //get selected study program
       const selectedStudyProgram = await StudyProgram.findOne({
