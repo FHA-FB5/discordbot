@@ -2,7 +2,7 @@ import { MessageActionRow, MessageSelectMenu, SelectMenuInteraction } from 'disc
 import { getMessage } from '@/utils';
 import { SuccessMessageEmbed, ErrorMessageEmbed } from '@/embeds';
 import * as moduleMenu from '@/interactions/selectMenus/chooseSemester/module';
-import { User, StudyProgramModule } from '@/models';
+import { User } from '@/models';
 
 export default {
   customId: 'choose-semester.semester',
@@ -18,41 +18,60 @@ export default {
       const semester = interaction.values[0].split('__')[1];
 
       //Set semester for user
-      await User.findOneAndUpdate({
+      await User.findOne({
         _id: context.user._id,
-      }, {
-        $addToSet: {
-          'guilds.$[elem].studyPrograms.$[elem2]': {
-            semester: semester,
-          },
-        },
-      }, {
-        arrayFilters: [
-          {
-            'elem.guild': context.guild,
-          },
-          {
-            'elem2.studyProgram._id': studyProgramID,
-          },
-        ],
-      }).exec();
+      }, function (err: any, result: any) {
+        result.guilds.forEach(function (guild: any) {
+          if (guild.guild == context.guild._id) {
+            guild.studyPrograms.forEach(function (studyProgram: any) {
+              if (studyProgram.studyProgram == studyProgramID) {
+                studyProgram.semester = semester;
+              }
+            });
+          }
+        });
+        result.save();
+      });
 
       //get all modules
-      const allModules = await StudyProgramModule.find({
-        guild: context.guild,
+      const allStudyPrograms = await User.find({
+        _id: context.user._id,
+        guilds: {
+          $elemMatch: {
+            guild: context.guild._id,
+          },
+        },
+      }).populate({
+        path: 'guilds',
+        populate: {
+          path: 'studyPrograms',
+          populate: {
+            path: 'studyProgram',
+            populate: {
+              path: 'modules',
+              populate: {
+                path: 'module',
+              },
+            },
+          },
+        },
       });
 
       //add possible modules to the menu
-      for (const module of allModules) {
-        moduleMenu.default.data.addOptions({
-          value: module._id.toString(),
-          label: module.abbreviation,
-          description: module.name,
+      let moduleCount = 0;
+      allStudyPrograms[0].guilds[0].studyPrograms.forEach((program: any) => {
+        program.studyProgram.modules.forEach((entry: any) => {
+          moduleCount++;
+          moduleMenu.default.data.addOptions({
+            value: entry.module._id.toString(),
+            label: entry.module.abbreviation,
+            description: entry.module.name,
+          });
         });
-      }
+      });
 
       moduleMenu.default.data.setMinValues(1);
-      moduleMenu.default.data.setMinValues(Math.min(allModules.length, 25));
+      moduleMenu.default.data.setMaxValues(Math.min(moduleCount, 25));
       
       const menuRow = new MessageActionRow();
       menuRow.addComponents(moduleMenu.default.data);

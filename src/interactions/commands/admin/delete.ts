@@ -6,10 +6,11 @@ import { ErrorMessageEmbed, SuccessMessageEmbed } from '@/embeds';
 export default {
   name: 'delete',
   cooldown: 10000,
-  defaultPermission: false,
+  ownerHasPermissionOnDefault: true,
   data: new SlashCommandBuilder()
     .setName('delete')
     .setDescription(getMessage('command.admin.delete.description'))
+    .setDefaultPermission(false)
     .addIntegerOption(option => 
       option.setName('count')
         .setDescription(getMessage('command.admin.delete.count.description'))

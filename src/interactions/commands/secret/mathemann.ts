@@ -5,10 +5,10 @@ import { getMessage } from '@/utils';
 export default {
   name: 'mathemann',
   cooldown: 10000,
-  defaultPermission: false,
   data: new SlashCommandBuilder()
     .setName('mathemann')
-    .setDescription(getMessage('command.secret.mathemann.description')),
+    .setDescription(getMessage('command.secret.mathemann.description'))
+    .setDefaultPermission(true),
   async execute(interaction: CommandInteraction) {
     await interaction.reply({ content: 'https://youtu.be/EVXfOATpgO0?t=68' });
   },

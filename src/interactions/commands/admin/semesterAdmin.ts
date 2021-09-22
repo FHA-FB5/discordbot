@@ -7,10 +7,11 @@ import { User, StudyProgram, StudyProgramModule } from '@/models';
 export default {
   name: 'semester-admin',
   cooldown: 10000,
-  defaultPermission: false,
+  ownerHasPermissionOnDefault: true,
   data: new SlashCommandBuilder()
     .setName('semester-admin')
     .setDescription(getMessage('command.admin.semesterAdmin.description'))
+    .setDefaultPermission(false)
     .addSubcommandGroup(group =>
       group.setName('set')
         .setDescription(getMessage('command.admin.semesterAdmin.set.description'))
@@ -110,18 +111,6 @@ export default {
                   //check if user has already this studyProgram
                   if (!userGuildEntrySet.studyPrograms.some((element: any) => element.studyProgram._id.toString() == studyProgramSet._id.toString())) {
                     //get highest semester from db
-
-                    //TODO
-                    //TODO
-                    //TODO
-                    //TODO
-                    //TODO
-                    //TODO
-                    //TODO
-                    //TODO
-                    //TODO
-                    //TODO
-                    //TODO
 
                     const highestSemesterSet = await StudyProgram.findOne({
                       _id: studyProgramSet._id,
@@ -316,7 +305,7 @@ export default {
                 //add all study programs to the message
                 let studyProgramsMessage: string = '';
                 userGuildEntrySet.studyPrograms.forEach((element: any) => {
-                  studyProgramsMessage += '    - ' + element.studyProgram.name + '(' + element.semester + '. Semester)\n';
+                  studyProgramsMessage += '    - ' + element.studyProgram.name + ' (' + element.semester + '. Semester)\n';
                 });
 
                 //add all modules to the message

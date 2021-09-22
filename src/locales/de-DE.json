@@ -152,92 +152,151 @@
           "success": "Allen Erstsemestern wurde die Rolle entzogen und die Rolle wurde entfernt."
         }
       },
-	  "semesterAdmin": {
-		"description": "Administriert die Studiengänge, Semester und Module anderer Nutzer.",
-		"error": {
-		  "userNotInDB": "Der Nutzer konnte nicht in der Datenbank gefunden werden."
-		},
-		"set": {
-		  "description": "Fügt einen Studiengang oder ein Modul zu einem Nutzer hinzu.",
-		  "studyProgram": {
-			"description": "Fügt einem Nutzer einen Studiengang hinzu.",
-			"success": "Dem Nutzer {{userName}} wurde der Studiengang {{studyProgram}} hinzugefügt.",
-			"error": {
-			  "noRole": "Die Discord-Rolle zum Studiengang wurde nicht gefunden.",
-			  "semesterRange": "Das Semester ist außerhalb der möglichen Reichweite.",
-			  "alreadyAdded": "Der Nutzer hat bereits diesen Studiengang.",
-			  "noStudyProgram": "Die Discord-Rolle ist kein Studiengang."
-			},
-			"user": {
-			  "description": "Nutzer, welchem der Studiengang hinzugefügt werden soll."
-			},
-			"name": {
-			  "description": "Discord-Rolle des Studiengangs."
-			},
-			"semester": {
-			  "description": "Semester, in welchem sich der Nutzer befindet."
-			}
-		  },
-		  "studyProgramModule": {
-			"description": "Fügt einem Nutzer ein Modul hinzu.",
-			"success": "Dem Nutzer {{userName}} wurde das Modul {{studyProgramModule}} hinzugefügt.",
-			"error": {
-			  "noRole": "Die Discord-Rolle zum Modul wurde nicht gefunden.",
-			  "alreadyAdded": "Der Nutzer hat bereits dieses Modul.",
-			  "noStudyProgram": "Die Discord-Rolle ist kein Modul."
-			},
-			"user": {
-			  "description": "Nutzer, welchem das Modul hinzugefügt werden soll."
-			},
-			"name": {
-			  "description": "Discord-Rolle des Moduls."
-			}
-		  }
-		},
-		"remove": {
-		  "description": "Entfernt einen Studiengang oder ein Modul von einem Nutzer.",
-		  "studyProgram": {
-			"description": "Entfernt einem Nutzer einen Studiengang.",
-			"success": "Dem Nutzer {{userName}} wurde der Studiengang {{studyProgram}} entfernt.",
-			"error": {
-			  "noRole": "Die Discord-Rolle zum Studiengang wurde nicht gefunden.",
-			  "notAdded": "Der Nutzer hat diesen Studiengang nicht hinzugefügt.",
-			  "noStudyProgram": "Die Discord-Rolle ist kein Studiengang."
-			},
-			"user": {
-			  "description": "Nutzer, welchem der Studiengang entfernt werden soll."
-			},
-			"name": {
-			  "description": "Discord-Rolle des Studiengangs."
-			}
-		  },
-		  "studyProgramModule": {
-			"description": "Entferne einem Nutzer ein Modul.",
-			"success": "Dem Nutzer {{userName}} wurde das Modul {{studyProgramModule}} entfernt.",
-			"error": {
-			  "noRole": "Die Discord-Rolle zum Modul wurde nicht gefunden.",
-			  "notAdded": "Der Nutzer hat dieses Modul nicht hinzugefügt.",
-			  "noStudyProgram": "Die Discord-Rolle ist kein Modul."
-			},
-			"user": {
-			  "description": "Nutzer, von welchem das Modul entfernt werden soll."
-			},
-			"name": {
-			  "description": "Discord-Rolle des Moduls."
-			}
-		  }
-		},
-		"list": {
-		  "description": "Listet alle Studiengänge und Module eines Nutzers auf.",
-		  "all": {
-			"description": "Listet alle Studiengänge und Module eines Nutzers auf.",
-			"success": "Daten zum Nutzer {{userName}}:\n\n**Studiengänge:**\n{{studyPrograms}}\n**Module**\n{{studyProgramModules}}",
-			"user": {
-			  "description": "Nutzer, von wem alle Informationen angezeigt werden sollen."
-			}
-		  }
-		}
-	  }
+      "semesterAdmin": {
+        "description": "Administriert die Studiengänge, Semester und Module anderer Nutzer.",
+        "error": {
+          "userNotInDB": "Der Nutzer konnte nicht in der Datenbank gefunden werden."
+        },
+        "set": {
+          "description": "Fügt einen Studiengang oder ein Modul zu einem Nutzer hinzu.",
+          "studyProgram": {
+            "description": "Fügt einem Nutzer einen Studiengang hinzu.",
+            "success": "Dem Nutzer {{userName}} wurde der Studiengang {{studyProgram}} hinzugefügt.",
+            "error": {
+              "noRole": "Die Discord-Rolle zum Studiengang wurde nicht gefunden.",
+              "semesterRange": "Das Semester ist außerhalb der möglichen Reichweite.",
+              "alreadyAdded": "Der Nutzer hat bereits diesen Studiengang.",
+              "noStudyProgram": "Die Discord-Rolle ist kein Studiengang."
+            },
+            "user": {
+              "description": "Nutzer, welchem der Studiengang hinzugefügt werden soll."
+            },
+            "name": {
+              "description": "Discord-Rolle des Studiengangs."
+            },
+            "semester": {
+              "description": "Semester, in welchem sich der Nutzer befindet."
+            }
+          },
+          "studyProgramModule": {
+            "description": "Fügt einem Nutzer ein Modul hinzu.",
+            "success": "Dem Nutzer {{userName}} wurde das Modul {{studyProgramModule}} hinzugefügt.",
+            "error": {
+              "noRole": "Die Discord-Rolle zum Modul wurde nicht gefunden.",
+              "alreadyAdded": "Der Nutzer hat bereits dieses Modul.",
+              "noStudyProgram": "Die Discord-Rolle ist kein Modul."
+            },
+            "user": {
+              "description": "Nutzer, welchem das Modul hinzugefügt werden soll."
+            },
+            "name": {
+              "description": "Discord-Rolle des Moduls."
+            }
+          }
+        },
+        "remove": {
+          "description": "Entfernt einen Studiengang oder ein Modul von einem Nutzer.",
+          "studyProgram": {
+            "description": "Entfernt einem Nutzer einen Studiengang.",
+            "success": "Dem Nutzer {{userName}} wurde der Studiengang {{studyProgram}} entfernt.",
+            "error": {
+              "noRole": "Die Discord-Rolle zum Studiengang wurde nicht gefunden.",
+              "notAdded": "Der Nutzer hat diesen Studiengang nicht hinzugefügt.",
+              "noStudyProgram": "Die Discord-Rolle ist kein Studiengang."
+            },
+            "user": {
+              "description": "Nutzer, welchem der Studiengang entfernt werden soll."
+            },
+            "name": {
+              "description": "Discord-Rolle des Studiengangs."
+            }
+          },
+          "studyProgramModule": {
+            "description": "Entferne einem Nutzer ein Modul.",
+            "success": "Dem Nutzer {{userName}} wurde das Modul {{studyProgramModule}} entfernt.",
+            "error": {
+              "noRole": "Die Discord-Rolle zum Modul wurde nicht gefunden.",
+              "notAdded": "Der Nutzer hat dieses Modul nicht hinzugefügt.",
+              "noStudyProgram": "Die Discord-Rolle ist kein Modul."
+            },
+            "user": {
+              "description": "Nutzer, von welchem das Modul entfernt werden soll."
+            },
+            "name": {
+              "description": "Discord-Rolle des Moduls."
+            }
+          }
+        },
+        "list": {
+          "description": "Listet alle Studiengänge und Module eines Nutzers auf.",
+          "all": {
+            "description": "Listet alle Studiengänge und Module eines Nutzers auf.",
+            "success": "Daten zum Nutzer {{userName}}:\n\n**Studiengänge:**\n{{studyPrograms}}\n**Module**\n{{studyProgramModules}}",
+            "user": {
+              "description": "Nutzer, von wem alle Informationen angezeigt werden sollen."
+            }
+          }
+        }
+      },
+      "permission": {
+        "list": {
+          "all": {
+            "description": "Listet alle Commands und ihre IDs auf."
+          }
+        },
+        "user": {
+          "add": {
+            "description": "Gewährt einem Nutzer die Rechte einen Command zu verwenden.",
+            "success": "Der Nutzer hat nun Rechte diesen Command zu verwenden.",
+            "error": {
+              "command": {
+                "notFound": "Der Command konnte nicht gefunden werden."
+              },
+              "user": {
+                "notFound": "Der Nutzer konnte nicht gefunden werden."
+              }
+            }
+          },
+          "del": {
+            "description": "Entzieht einem Nutzer die Rechte einen Command zu verwenden.",
+            "success": "Der Nutzer hat nun nicht mehr Rechte diesen Command zu verwenden.",
+            "error": {
+              "command": {
+                "notFound": "Der Command konnte nicht gefunden werden."
+              },
+              "user": {
+                "notFound": "Der Nutzer konnte nicht gefunden werden."
+              }
+            }
+          }
+        },
+        "role": {
+          "add": {
+            "description": "Gewährt einer Rolle die Rechte einen Command zu verwenden.",
+            "success": "Die Rolle hat nun Rechte diesen Command zu verwenden.",
+            "error": {
+              "command": {
+                "notFound": "Der Command konnte nicht gefunden werden."
+              },
+              "role": {
+                "notFound": "Die Rolle konnte nicht gefunden werden."
+              }
+            }
+          },
+          "del": {
+            "description": "Entzieht einer Rolle die Rechte einen Command zu verwenden.",
+            "success": "Die Rolle hat nun nicht mehr Rechte diesen Command zu verwenden.",
+            "error": {
+              "command": {
+                "notFound": "Der Command konnte nicht gefunden werden."
+              },
+              "role": {
+                "notFound": "Die Rolle konnte nicht gefunden werden."
+              }
+            }
+          }
+        }
+      }
     },
     "dev": {
       "devInit": {
@@ -275,8 +334,8 @@
       },
       "help": {
         "description": "Sendet eine Command-Hilfe",
-        "title": "/coin -> Wirf eine Münze\n/game set -> Füge ein Spiel zu deinem Nutzer hinzu\n/game remove -> Entferne ein Spiel von deinem Nutzer\n/help -> Liste diese Hilfe auf\n/info -> Erhalte Informationen zu Institutionen der FH\n/image-movie -> Imagefilm der FH\n/ping -> Sendet einen Ping an den Server\n/quartus -> Informationen zur Software Quartus\n/stats -> Mitgliederstatistiken des Servers\n/visual-studio -> Informationen zur Software Visual Studio",
-        "text": "Hilfe"
+        "text": "/coin -> Wirf eine Münze\n/game set -> Füge ein Spiel zu deinem Nutzer hinzu\n/game remove -> Entferne ein Spiel von deinem Nutzer\n/help -> Liste diese Hilfe auf\n/info -> Erhalte Informationen zu Institutionen der FH\n/image-movie -> Imagefilm der FH\n/ping -> Sendet einen Ping an den Server\n/quartus -> Informationen zur Software Quartus\n/stats -> Mitgliederstatistiken des Servers\n/visual-studio -> Informationen zur Software Visual Studio",
+        "title": "Hilfe"
       },
       "imageMovie": {
         "description": "Zeigt den Imagefilm der FH-Aachen"
@@ -346,7 +405,7 @@
             },
             "copyright": {
               "title": "Copyright",
-              "text": "Contributors: Titus Kirch, Patrik Scholke, Simon Ostendorf\n© 2021 Fachschaftsrat FB5."
+              "text": "Contributors: Titus Kirch, Patrik Schmolke, Simon Ostendorf\n© 2021 Fachschaftsrat FB5."
             }
           }
         }
@@ -356,16 +415,18 @@
       },
       "quartus": {
         "description": "Informationen zur Installation von Quartus für das Erstsemestermodul Theoretische Informatik.",
-        "title": "Quartus ist ein Programm, welches du für das Praktikum des Erstsemestermoduls Theoretische Informatik benötigst.", 
-        "text": "Quartus"
+        "text": "Quartus ist ein Programm, welches du für das Praktikum des Erstsemestermoduls Theoretische Informatik benötigst.", 
+        "title": "Quartus"
       },
       "stats": {
         "description": "Gibt Auskünfte über die Anzahl der Personen auf dem Discord.",
         "success": "**Mitgliederverteilung:**\n{{counts}}"
       },
-      "visualStudio": "Informationen zur Installation von Visual Studio für das Erstsemestermodul GIP.",
-      "title": "Visual Studio ist eine Entwicklungsumgebung von Microsoft, welche du durch die FH kostenlos installieren kannst. Du brauchst sie zum Beispiel für das Erstsemestermodul Grundlagen der Informatik (GIP).", 
-      "text": "Visual Studio"
+      "visualStudio": {
+        "description": "Informationen zur Installation von Visual Studio für das Erstsemestermodul GIP.",
+        "text": "Visual Studio ist eine Entwicklungsumgebung von Microsoft, welche du durch die FH kostenlos installieren kannst. Du brauchst sie zum Beispiel für das Erstsemestermodul Grundlagen der Informatik (GIP).", 
+        "title": "Visual Studio"
+      }
     },
     "secret": {
       "error": {
@@ -374,6 +435,9 @@
       },
       "hoever": {
         "description": "Es gibt nur einen Georg Hoever!"
+      },
+      "ifSchleife": {
+        "description": "Was ist eine if-Schleife?"
       },
       "matheIstMagic": {
         "description": "Mathe ist magic!",
@@ -423,24 +487,24 @@
         }
       }
     },
-	"chooseSemester": {
-	  "start": {
-		  "message": "Hier können Sie Ihr Semester auswählen.\nUm zu Starten, wählen Sie unten Ihren Studiengang aus."
-	  },
-	  "studyProgram": {
-      "success": "Sie haben **{{studyProgram}}** als Studiengang ausgewählt. Bitte wählen Sie nun Ihr Fachsemester.",
-      "noModules": "Es wurden für diesen Studiengang noch keine Module angelegt oder hinzugefügt.",
-      "noRole": "Die Rolle für den Studiengang konnte nicht gefunden werden."
-	  },
-	  "semester": {
-		  "success": "Sie haben das **{{semester}}. Semester** als Ihr Fachsemester ausgewählt. Bitte wählen Sie nun Ihre belegten Module aus."
-	  },
+    "chooseSemester": {
+      "start": {
+        "message": "Hier können Sie Ihr Semester auswählen.\nUm zu starten, wählen Sie unten Ihren Studiengang aus."
+      },
+      "studyProgram": {
+        "success": "Sie haben **{{studyProgram}}** als Studiengang ausgewählt. Bitte wählen Sie nun Ihr Fachsemester.",
+        "noModules": "Es wurden für diesen Studiengang noch keine Module angelegt oder hinzugefügt.",
+        "noRole": "Die Rolle für den Studiengang konnte nicht gefunden werden."
+      },
+      "semester": {
+        "success": "Sie haben das **{{semester}}. Semester** als Ihr Fachsemester ausgewählt. Bitte wählen Sie nun Ihre belegten Module aus."
+      },
       "modules": {
         "success": "Sie haben die Module\n**{{modules}}** ausgewählt. Die Semesterzuordnung ist damit abgeschlossen. Vielen Dank.",
         "noRole": "Die Rolle für das Modul konnte nicht gefunden werden.",
         "notFound": "Das Modul konnte nicht mehr in der Datenbank gefunden werden."
-	    }
-	  }
+      }
+    }
   },
   "error": {
     "unknown": "Es ist ein unbekannter Fehler aufgetreten!",

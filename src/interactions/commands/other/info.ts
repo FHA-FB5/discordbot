@@ -19,10 +19,10 @@ import * as vpnTestButton from '@/interactions/buttons/other/infoVPNTest';
 export default {
   name: 'info',
   cooldown: 10000,
-  defaultPermission: false,
   data: new SlashCommandBuilder()
     .setName('info')
     .setDescription(getMessage('command.other.info.description'))
+    .setDefaultPermission(true)
     .addStringOption(option =>
       option.setName('target')
         .setDescription(getMessage('command.other.info.target.description'))

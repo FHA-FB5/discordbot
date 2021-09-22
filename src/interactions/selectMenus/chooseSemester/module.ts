@@ -47,7 +47,7 @@ export default {
 
           moduleMessage += '    - ' + module.name + '\n';
         } else {
-          return interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('selectMenu.chooseSemester.modules.notFound') })] });
+          return interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('selectMenu.chooseSemester.modules.notFound') })], ephemeral: true });
         }
       }
 

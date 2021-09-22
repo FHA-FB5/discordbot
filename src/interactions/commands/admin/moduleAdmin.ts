@@ -8,10 +8,11 @@ import { StudyProgram, StudyProgramModule, User } from '@/models';
 export default {
   name: 'module-admin',
   cooldown: 10000,
-  defaultPermission: false,
+  ownerHasPermissionOnDefault: true,
   data: new SlashCommandBuilder()
     .setName('module-admin')
     .setDescription(getMessage('command.admin.moduleAdmin.description'))
+    .setDefaultPermission(false)
     .addSubcommandGroup(group => 
       group.setName('add')
         .setDescription(getMessage('command.admin.moduleAdmin.add.description'))
@@ -181,7 +182,7 @@ export default {
                   //Module is used before, check if its already added to the studyProgram
   
                   //Check if module is already added to studyProgram
-                  if (studyProgramAddModule.modules.some((entry: any) => entry.module._id.toString() === studyProgramModuleAddModule._id.toString())) {
+                  if (!studyProgramAddModule.modules.some((entry: any) => entry.module._id.toString() == studyProgramModuleAddModule._id.toString())) {
                     //Add module to study program
                     StudyProgram.findOneAndUpdate({
                       _id: studyProgramAddModule._id,

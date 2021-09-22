@@ -1,8 +1,8 @@
-import { MessageActionRow, MessageSelectMenu, SelectMenuInteraction, GuildMember } from 'discord.js';
+import { MessageActionRow, MessageSelectMenu, SelectMenuInteraction, GuildMember, GuildMemberRoleManager } from 'discord.js';
 import { getMessage } from '@/utils';
 import { SuccessMessageEmbed, ErrorMessageEmbed } from '@/embeds';
 import * as semesterMenu from '@/interactions/selectMenus/chooseSemester/semester';
-import { StudyProgram, User } from '@/models';
+import { StudyProgram, User, StudyProgramModule } from '@/models';
 
 export default {
   customId: 'choose-semester.study-program',
@@ -13,6 +13,58 @@ export default {
     .setPlaceholder(getMessage('selectMenu.noOptionSelected')),
   async execute(interaction: SelectMenuInteraction, context: any) {
     if (context.guild) {
+
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      //TODO
+      await User.findOne({
+        _id: context.user._id,
+      }, async function (err: any, result: any) {
+        await result.guilds.forEach(async function (guild: any) {
+          if (guild.guild == context.guild._id) {
+            const studyPrograms = await StudyProgram.find({
+              _id: { $in: guild.studyPrograms },
+            }).exec();
+            studyPrograms.forEach((studyProgram: any) => {
+              if (interaction.member instanceof GuildMember) {
+                interaction.member?.roles.remove(studyProgram.roleId);
+              }
+            });
+
+            const studyProgramModules = await StudyProgramModule.find({
+              _id: { $in: guild.studyProgramModules },
+            }).exec();
+            studyProgramModules.forEach((studyProgramModule: any) => {
+              if (interaction.member instanceof GuildMember) {
+                interaction.member?.roles.remove(studyProgramModule.roleId);
+              }
+            });
+
+            guild.studyPrograms = [];
+            guild.studyProgramModules = [];
+          }
+        });
+        result.save();
+      });
+
+
+
+
       //get selected study program
       const selectedStudyProgram = await StudyProgram.findOne({
         _id: interaction.values[0],
@@ -27,24 +79,6 @@ export default {
           return interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('selectMenu.studyProgram.noRole') })] });
         }
       }
-
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO: Setzt es immer wieder ein und nicht unique
 
       //set study program for user
       const studyProgramInsert = await User.findOne({
@@ -83,21 +117,6 @@ export default {
         const highestSemester = await StudyProgram.findOne({
           _id: selectedStudyProgram._id,
         }).sort({ 'modules.semester': 'desc' }).exec();
-
-        //TODO: Sort not working
-        //TODO
-        //TODO
-        //TODO
-        //TODO
-        //TODO
-        //TODO
-        //TODO
-        //TODO
-        //TODO
-        //TODO
-        //TODO
-        //TODO
-        //TODO
 
         // get highest semester
         let highestSemesterInt = 1;

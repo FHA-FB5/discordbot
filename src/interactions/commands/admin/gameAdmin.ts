@@ -7,10 +7,11 @@ import { Game } from '@/models';
 export default {
   name: 'game-admin',
   cooldown: 10000,
-  defaultPermission: false,
+  ownerHasPermissionOnDefault: true,
   data: new SlashCommandBuilder()
     .setName('game-admin')
     .setDescription(getMessage('command.admin.gameAdmin.description'))
+    .setDefaultPermission(false)
     .addSubcommand(cmd => 
       cmd.setName('add')
         .setDescription(getMessage('command.admin.gameAdmin.add.description'))
