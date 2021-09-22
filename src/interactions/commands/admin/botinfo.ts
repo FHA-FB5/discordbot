@@ -6,10 +6,11 @@ import { InfoMessageEmbed, ErrorMessageEmbed } from '@/embeds';
 export default {
   name: 'bot-info',
   cooldown: 10000,
-  defaultPermission: false,
+  ownerHasPermissionOnDefault: true,
   data: new SlashCommandBuilder()
     .setName('bot-info')
     .setDescription(getMessage('command.admin.botinfo.description'))
+    .setDefaultPermission(false)
     .addStringOption(option => 
       option.setName('action')
         .setDescription(getMessage('command.admin.botinfo.action.description'))

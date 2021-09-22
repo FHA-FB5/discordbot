@@ -6,10 +6,10 @@ import { EmptyMessageEmbed } from '@/embeds';
 export default {
   name: 'quartus',
   cooldown: 10000,
-  defaultPermission: false,
   data: new SlashCommandBuilder()
     .setName('quartus')
-    .setDescription(getMessage('command.other.quartus.description')),
+    .setDescription(getMessage('command.other.quartus.description'))
+    .setDefaultPermission(true),
   async execute(interaction: CommandInteraction) {
     await interaction.reply({ embeds: [new EmptyMessageEmbed({ 
       title: getMessage('command.other.quartus.title'),

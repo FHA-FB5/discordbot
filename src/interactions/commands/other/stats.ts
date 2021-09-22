@@ -7,10 +7,10 @@ import { User, StudyProgram } from '@/models';
 export default {
   name: 'stats',
   cooldown: 10000,
-  defaultPermission: false,
   data: new SlashCommandBuilder()
     .setName('stats')
-    .setDescription(getMessage('command.other.stats.description')),
+    .setDescription(getMessage('command.other.stats.description'))
+    .setDefaultPermission(true),
   async execute(interaction: CommandInteraction, context: any) {
     if (context.guild) {
       let countMessage = '';

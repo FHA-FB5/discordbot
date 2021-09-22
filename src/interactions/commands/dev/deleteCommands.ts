@@ -7,9 +7,11 @@ export default {
   name: 'delete-commands',
   dev: true,
   cooldown: 30000,
+  ownerHasPermissionOnDefault: true,
   data: new SlashCommandBuilder()
     .setName('delete-commands')
-    .setDescription(getMessage('command.dev.deleteCommands.description')),
+    .setDescription(getMessage('command.dev.deleteCommands.description'))
+    .setDefaultPermission(false),
   async execute(interaction: CommandInteraction) {
     if (interaction.inGuild()) {
       const guild = interaction.client.guilds.cache.get(interaction.guildId);

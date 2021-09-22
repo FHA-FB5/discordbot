@@ -7,10 +7,11 @@ import { User } from '@/models';
 export default {
   name: 'select-first-semester',
   cooldown: 10000,
-  defaultPermission: false,
+  ownerHasPermissionOnDefault: true,
   data: new SlashCommandBuilder()
     .setName('select-first-semester')
     .setDescription(getMessage('command.admin.selectFirstSemester.description'))
+    .setDefaultPermission(false)
     .addSubcommand(cmd =>
       cmd.setName('set')
         .setDescription(getMessage('command.admin.selectFirstSemester.set.description')))
@@ -33,7 +34,7 @@ export default {
             const users = await User.find({
               guilds: {
                 $elemMatch: {
-                  guild: context.guild,
+                  guild: context.guild._id,
                   studyProgram: {
                     $elemMatch: {
                       semester: 1,
@@ -42,10 +43,40 @@ export default {
                 },
               },
             });
+
+            //TODO
+            //TODO
+            //TODO
+            //TODO
+            //TODO
+            //TODO
+            //TODO
+            //TODO
+            //TODO
+            //TODO
+            //TODO
+            console.log(users);
   
             //Set role for each user
             users.forEach(async (user: any) => {
               const member = await interaction.guild?.members.fetch(user.userID);
+              
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              //TODO
+              console.log(member);
+
               if (member) {
                 member.roles.add(roleSet);
               }

@@ -5,10 +5,10 @@ import { getMessage } from '@/utils';
 export default {
   name: 'coin',
   cooldown: 10000,
-  defaultPermission: false,
   data: new SlashCommandBuilder()
     .setName('coin')
-    .setDescription(getMessage('command.other.coin.description')),
+    .setDescription(getMessage('command.other.coin.description'))
+    .setDefaultPermission(true),
   async execute(interaction: CommandInteraction) {
     var coin = 'Kopf';
     if (Math.round(Math.random())) {

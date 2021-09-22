@@ -8,7 +8,8 @@ export default {
   defaultPermission: false,
   data: new SlashCommandBuilder()
     .setName('cookie')
-    .setDescription(getMessage('command.other.cookie.description')),
+    .setDescription(getMessage('command.other.cookie.description'))
+    .setDefaultPermission(true),
   async execute(interaction: CommandInteraction) {
     await interaction.reply({ content: getMessage('command.other.cookie.success') });
   },
