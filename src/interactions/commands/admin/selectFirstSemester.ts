@@ -27,7 +27,7 @@ export default {
             permissions: [],
             reason: '/select-first-semester command execution',
           });
-  
+
           //Check if role was created
           if (roleSet) {
             //Get all users from this guild with a studyProgram in the first semester
@@ -35,7 +35,7 @@ export default {
               guilds: {
                 $elemMatch: {
                   guild: context.guild._id,
-                  studyProgram: {
+                  studyPrograms: {
                     $elemMatch: {
                       semester: 1,
                     },
@@ -55,12 +55,11 @@ export default {
             //TODO
             //TODO
             //TODO
-            console.log(users);
-  
+
             //Set role for each user
             users.forEach(async (user: any) => {
               const member = await interaction.guild?.members.fetch(user.userID);
-              
+
               //TODO
               //TODO
               //TODO
@@ -81,7 +80,7 @@ export default {
                 member.roles.add(roleSet);
               }
             });
-            
+
             interaction.reply({ embeds: [new SuccessMessageEmbed({ description: getMessage('command.admin.selectFirstSemester.set.success') })] });
           } else {
             await interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('error.unknown') })] });
@@ -95,7 +94,7 @@ export default {
           if (roleRemove) {
             roleRemove.delete();
           }
-          
+
           interaction.reply({ embeds: [new SuccessMessageEmbed({ description: getMessage('command.admin.selectFirstSemester.remove.success') })] });
           break;
         default:
