@@ -3,13 +3,13 @@ import { CommandInteraction } from 'discord.js';
 import { getMessage } from '@/utils';
 
 export default {
-  name: 'ping',
+  name: 'error',
   cooldown: 10000,
   data: new SlashCommandBuilder()
-    .setName('ping')
-    .setDescription(getMessage('command.other.ping.description'))
+    .setName('error')
+    .setDescription(getMessage('command.secret.error.description'))
     .setDefaultPermission(true),
   async execute(interaction: CommandInteraction) {
-    await interaction.reply({ content: 'Pong!' });
+    await interaction.reply({ content: getMessage('command.secret.error.success') });
   },
 };

@@ -3,13 +3,13 @@ import { CommandInteraction } from 'discord.js';
 import { getMessage } from '@/utils';
 
 export default {
-  name: 'ping',
+  name: 'if-schleife',
   cooldown: 10000,
   data: new SlashCommandBuilder()
-    .setName('ping')
-    .setDescription(getMessage('command.other.ping.description'))
+    .setName('if-schleife')
+    .setDescription(getMessage('command.secret.ifSchleife.description'))
     .setDefaultPermission(true),
   async execute(interaction: CommandInteraction) {
-    await interaction.reply({ content: 'Pong!' });
+    await interaction.reply({ content: 'http://if-schleife.de/' });
   },
 };

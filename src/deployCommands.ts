@@ -1,11 +1,23 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { logger } from '@/utils';
-import { readdirSync } from 'fs';
+import { existsSync, readdirSync, writeFile, writeFileSync } from 'fs';
 import Config from '@/Config';
 
 const commands = [];
+const commandsData: any = {};
+const commandsOwnerHasPermissionOnDefault: string[] = [];
+const commandsOwnerHasPermissionOnDefaultIDs: string[] = [];
 const commandFolders = readdirSync(`${__dirname}/interactions/commands`);
+
+if (!existsSync('./commandsData.json')) {
+  writeFileSync('./commandsData.json', JSON.stringify(commandsData));
+}
+
+if (!existsSync('./commandsOwnerHasPermissionOnDefaultIDs.json')) {
+  writeFileSync('./commandsOwnerHasPermissionOnDefaultIDs.json', JSON.stringify(commandsOwnerHasPermissionOnDefaultIDs));
+}
+
 // eslint-disable-next-line no-restricted-syntax
 for (const folder of commandFolders) {
   const commandFiles = readdirSync(`${__dirname}/interactions/commands/${folder}`).filter((file) => file.endsWith('.js'));
@@ -14,6 +26,10 @@ for (const folder of commandFolders) {
     // eslint-disable-next-line global-require
     const command = require(`./interactions/commands/${folder}/${file}`);
     logger.log('info', 'deployCommands.load.command', { module: folder, command: command.default.name });
+
+    if (command.default.ownerHasPermissionOnDefault) {
+      commandsOwnerHasPermissionOnDefault.push(command.default.name);
+    }
 
     if (Config.devMode || !command.default.dev) {
       commands.push(command.default.data.toJSON());
@@ -25,10 +41,11 @@ for (const folder of commandFolders) {
 
 const rest = new REST({ version: '9' }).setToken(Config.botToken);
 (async () => {
+  let output;
   try {
     if (Config.devMode) {
       if (Config.devGuildId) {
-        await rest.put(
+        output = await rest.put(
           Routes.applicationGuildCommands(Config.botClientID, Config.devGuildId),
           { body: commands },
         );
@@ -37,7 +54,7 @@ const rest = new REST({ version: '9' }).setToken(Config.botToken);
         logger.log('error', 'discord application.guildCommand.register Config.devGuildId missing', { command: commands });
       }
     } else {
-      await rest.put(
+      output = await rest.put(
         Routes.applicationCommands(Config.botClientID),
         { body: commands },
       );
@@ -46,4 +63,30 @@ const rest = new REST({ version: '9' }).setToken(Config.botToken);
   } catch (error) {
     logger.log('error', 'discord application.command.register error', error);
   }
+  if (output) {
+    JSON.parse(JSON.stringify(output)).forEach((command: any) => {
+      commandsData[command.name] = {
+        id: command.id,
+        name: command.name,
+      };
+
+      if (commandsOwnerHasPermissionOnDefault && commandsOwnerHasPermissionOnDefault.includes(command.name)) {
+        commandsOwnerHasPermissionOnDefaultIDs.push(command.id);
+      }
+    });
+  }
+  writeFile('./commandsData.json', JSON.stringify(commandsData), 'utf8', function (error) {
+    if (error) {
+      logger.log('error', 'discord application.command.write.commandsData error', error);
+      return;
+    }
+    logger.log('info', 'discord application.command.write.commandsData successfully');
+  });
+  writeFile('./commandsOwnerHasPermissionOnDefaultIDs.json', JSON.stringify(commandsOwnerHasPermissionOnDefaultIDs), 'utf8', function (error) {
+    if (error) {
+      logger.log('error', 'discord application.command.write.commandsOwnerHasPermissionOnDefaultIDs error', error);
+      return;
+    }
+    logger.log('info', 'discord application.command.write.commandsOwnerHasPermissionOnDefaultIDs successfully');
+  });
 })();

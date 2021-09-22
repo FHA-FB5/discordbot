@@ -8,9 +8,11 @@
     "build:dev": "nodemon --watch src --ext ts --exec \"npm run eslint && npm run build\"",
     "build:development": "npm run build:dev",
     "start": "node -r dotenv/config dist/index",
+    "start:dc": "npm run start:deployCommands",
     "start:deployCommands": "node -r dotenv/config dist/deployCommands",
     "start:watch": "nodemon -r dotenv/config dist/index",
-    "eslint": "npx eslint 'src/**.ts'"
+    "eslint": "npx eslint 'src/**.ts'",
+    "buildAndStart": "npm run eslint && npm run build && npm run start"
   },
   "keywords": [],
   "author": "",
