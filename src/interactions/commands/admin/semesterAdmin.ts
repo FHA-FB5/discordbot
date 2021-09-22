@@ -147,6 +147,7 @@ export default {
                         return interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('command.admin.semesterAdmin.set.studyProgram.error.noRole') })] });
                       }
 
+
                       //Set study program for user
                       await User.findOneAndUpdate({
                         _id: user._id,

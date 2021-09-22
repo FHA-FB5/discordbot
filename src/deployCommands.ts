@@ -1,7 +1,7 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { logger } from '@/utils';
-import { readdirSync, writeFile } from 'fs';
+import { existsSync, readdirSync, writeFile, writeFileSync } from 'fs';
 import Config from '@/Config';
 
 const commands = [];
@@ -9,6 +9,15 @@ const commandsData: any = {};
 const commandsOwnerHasPermissionOnDefault: string[] = [];
 const commandsOwnerHasPermissionOnDefaultIDs: string[] = [];
 const commandFolders = readdirSync(`${__dirname}/interactions/commands`);
+
+if (!existsSync('./commandsData.json')) {
+  writeFileSync('./commandsData.json', JSON.stringify(commandsData));
+}
+
+if (!existsSync('./commandsOwnerHasPermissionOnDefaultIDs.json')) {
+  writeFileSync('./commandsOwnerHasPermissionOnDefaultIDs.json', JSON.stringify(commandsOwnerHasPermissionOnDefaultIDs));
+}
+
 // eslint-disable-next-line no-restricted-syntax
 for (const folder of commandFolders) {
   const commandFiles = readdirSync(`${__dirname}/interactions/commands/${folder}`).filter((file) => file.endsWith('.js'));
