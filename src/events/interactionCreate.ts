@@ -105,7 +105,9 @@ async function interactionSelectMenu(interaction: SelectMenuInteraction, context
   }
 }
 
-async function createUser(user: any, member: GuildMember, thisGuild: any) {
+async function createUser(member: GuildMember, thisGuild: any) {
+  const user = await new UserCacheHandler(member.id).get();
+
   //Check if user exists
   if (user) {
     //Insert guild inside user (only ifr not existent (addToSet looks if its unique))
@@ -128,26 +130,6 @@ async function createUser(user: any, member: GuildMember, thisGuild: any) {
         },
       }).exec();
     }
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //TODO
-    //UPDATE NOT UNIQUE
 
   } else {
     //create user and insert guild
@@ -170,15 +152,8 @@ async function interactionHandler(interaction: MessageComponentInteraction) {
     user: null,
   };
 
-  // set user
-  const user = await new UserCacheHandler(interaction.user.id).get();
-  if (user) {
-    context.user = user;
-  }
-
   // check for guild
   if (interaction.inGuild()) {
-
     // get guild and set if exists
     const guild = await new GuildCacheHandler(interaction.guildId).get();
     if (guild) {
@@ -188,7 +163,13 @@ async function interactionHandler(interaction: MessageComponentInteraction) {
 
   //Create or update user object inside database
   if (context.guild && interaction.inGuild() && interaction.member instanceof GuildMember) {
-    createUser(user, interaction.member, context.guild);
+    await createUser(interaction.member, context.guild);
+  }
+
+  // set user
+  const user = await new UserCacheHandler(interaction.user.id).get();
+  if (user) {
+    context.user = user;
   }
 
   // check interaction and try to execute
