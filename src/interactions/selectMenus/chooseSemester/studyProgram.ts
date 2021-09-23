@@ -124,7 +124,7 @@ export default {
         });
         semesterMenu.default.data.options = [];
       } else {
-        await interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('selectMenu.chooseSemester.studyProgram.noModules') })] });
+        await interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('selectMenu.chooseSemester.studyProgram.noModules') })], ephemeral: true });
       }
     } else {
       await interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('error.guildIsNull') })] });
