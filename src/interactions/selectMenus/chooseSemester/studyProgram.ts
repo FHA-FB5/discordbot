@@ -38,10 +38,31 @@ export default {
       }, async function (err: any, result: any) {
         await result.guilds.forEach(async function (guild: any) {
           if (guild.guild == context.guild._id) {
+            // remove all roles
+            await guild.studyPrograms.forEach(async function (studyProgram: any) {
+              const studyProgramObject = await StudyProgram.findOne({
+                _id: studyProgram.studyProgram,
+              });
+              const role = await interaction.guild?.roles.fetch(studyProgramObject.roleId);
+              if (interaction.member instanceof GuildMember && role) {
+                interaction.member?.roles.remove(role);
+              }
+            });
+            await guild.studyProgramModules.forEach(async function (studyProgramModule: any) {
+              const studyProgramModuleObject = await StudyProgramModule.findOne({
+                _id: studyProgramModule,
+              });
+              console.log(studyProgramModuleObject);
+              const role = await interaction.guild?.roles.fetch(studyProgramModuleObject.roleId);
+              if (interaction.member instanceof GuildMember && role) {
+                interaction.member?.roles.remove(role);
+              }
+            });
+
             guild.studyPrograms = [];
             guild.studyProgramModules = [];
-            guild.save();
           }
+          result.save();
         });
       });
 
