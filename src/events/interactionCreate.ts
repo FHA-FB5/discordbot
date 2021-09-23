@@ -154,19 +154,18 @@ async function interactionHandler(interaction: MessageComponentInteraction) {
 
   // check for guild
   if (interaction.inGuild()) {
-
     // get guild and set if exists
     const guild = await new GuildCacheHandler(interaction.guildId).get();
     if (guild) {
       context.guild = guild;
     }
   }
-  
+
   //Create or update user object inside database
   if (context.guild && interaction.inGuild() && interaction.member instanceof GuildMember) {
-    createUser(interaction.member, context.guild);
+    await createUser(interaction.member, context.guild);
   }
-    
+
   // set user
   const user = await new UserCacheHandler(interaction.user.id).get();
   if (user) {
