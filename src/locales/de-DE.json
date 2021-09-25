@@ -320,7 +320,7 @@
       "game": {
         "description": "Rollen für Spiele entfernen und setzen.",
         "error": {
-          "noGames": "Auf diesem Server sind noch keine Spiele angelegt oder du hast schon alle zu deinem Profil hinzugefügt.",
+          "noGames": "Auf diesem Server sind noch keine Spiele angelegt oder du hast schon alle zu deinem Profil hinzugefügt. Sollte dies ein Fehler sein melde dich bitte bei den Bot-Administratoren.",
           "noGamesAdded": "Sie haben noch kein Spiel zu Ihrem Benutzerkonto hinzugefügt welches Sie entfernen könnten."
         },
         "set": {

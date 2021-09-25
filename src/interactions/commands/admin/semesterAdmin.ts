@@ -6,7 +6,7 @@ import { User, StudyProgram, StudyProgramModule } from '@/models';
 
 export default {
   name: 'semester-admin',
-  cooldown: 10000,
+  cooldown: 1000,
   ownerHasPermissionOnDefault: true,
   data: new SlashCommandBuilder()
     .setName('semester-admin')

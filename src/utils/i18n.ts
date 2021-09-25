@@ -3,7 +3,7 @@ import logger from './logger';
 
 const i18n = new I18n();
 i18n.configure({
-  locales: ['de-DE', 'en-GB'],
+  locales: ['de-DE'],
   defaultLocale: 'de-DE',
   retryInDefaultLocale: true,
   directory: `${__dirname}/../locales`,

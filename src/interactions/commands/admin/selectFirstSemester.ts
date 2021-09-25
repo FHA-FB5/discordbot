@@ -44,38 +44,9 @@ export default {
               },
             });
 
-            //TODO
-            //TODO
-            //TODO
-            //TODO
-            //TODO
-            //TODO
-            //TODO
-            //TODO
-            //TODO
-            //TODO
-            //TODO
-
             //Set role for each user
             users.forEach(async (user: any) => {
               const member = await interaction.guild?.members.fetch(user.userID);
-
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              //TODO
-              console.log(member);
-
               if (member) {
                 member.roles.add(roleSet);
               }

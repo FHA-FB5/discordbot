@@ -6,7 +6,7 @@ import { Game } from '@/models';
 
 export default {
   name: 'game-admin',
-  cooldown: 10000,
+  cooldown: 1000,
   ownerHasPermissionOnDefault: true,
   data: new SlashCommandBuilder()
     .setName('game-admin')

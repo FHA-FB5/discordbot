@@ -6,7 +6,7 @@ import { User } from '@/models';
 
 export default {
   customId: 'choose-semester.semester',
-  cooldown: 10000,
+  cooldown: 1000,
   defaultPermission: false,
   data: new MessageSelectMenu()
     .setCustomId('choose-semester.semester')
