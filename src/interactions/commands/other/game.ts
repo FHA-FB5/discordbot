@@ -41,7 +41,8 @@ export default {
           });
 
           //check if guild has games
-          if (allGames.length > 0) {
+          if (allGames.length > 0 && allGames.length <= 25) {
+
             gameSetMenu.default.data.setMinValues(1);
             gameSetMenu.default.data.setMaxValues(Math.min(25, allGames.length));
 
@@ -55,7 +56,7 @@ export default {
             });
 
             menueRow.addComponents(gameSetMenu.default.data);
-            interaction.reply({ embeds: [new InfoMessageEmbed({ description: getMessage('command.other.game.set.success') })], components: [menueRow], ephemeral: true });
+            await interaction.reply({ embeds: [new InfoMessageEmbed({ description: getMessage('command.other.game.set.success') })], components: [menueRow], ephemeral: true });
             gameSetMenu.default.data.options = [];
           } else {
             return interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('command.other.game.error.noGames') })] });
@@ -67,6 +68,7 @@ export default {
             gameRemoveMenu.default.data.setMinValues(1);
             gameRemoveMenu.default.data.setMaxValues(Math.min(25, userGames.length));
 
+            let count = 0;
             //Add games to select menu
             for (const gameID of userGames) {
               //get game from database
@@ -75,14 +77,18 @@ export default {
               });
               //add game to select menu
               gameRemoveMenu.default.data.addOptions({
-                label: game.abbreviation.toString(),
+                label: game.abbreviation,
                 description: game.name,
                 value: game._id.toString(),
               });
+              count++;
+              if (count == 25) {
+                break;
+              }
             }
 
             menueRow.addComponents(gameRemoveMenu.default.data);
-            interaction.reply({ embeds: [new InfoMessageEmbed({ description: getMessage('command.other.game.remove.success') })], components: [menueRow], ephemeral: true });
+            await interaction.reply({ embeds: [new InfoMessageEmbed({ description: getMessage('command.other.game.remove.success') })], components: [menueRow], ephemeral: true });
             gameRemoveMenu.default.data.options = [];
           } else {
             return interaction.reply({ embeds: [new ErrorMessageEmbed({ description: getMessage('command.other.game.error.noGamesAdded') })] });

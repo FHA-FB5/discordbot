@@ -14,25 +14,6 @@ export default {
   async execute(interaction: SelectMenuInteraction, context: any) {
     if (context.guild) {
 
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-      //TODO
-
       await User.findOne({
         _id: context.user._id,
       }, async function (err: any, result: any) {
@@ -52,7 +33,6 @@ export default {
               const studyProgramModuleObject = await StudyProgramModule.findOne({
                 _id: studyProgramModule,
               });
-              console.log(studyProgramModuleObject);
               const role = await interaction.guild?.roles.fetch(studyProgramModuleObject.roleId);
               if (interaction.member instanceof GuildMember && role) {
                 interaction.member?.roles.remove(role);
