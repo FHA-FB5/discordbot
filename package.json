@@ -30,7 +30,7 @@
     "mongoose": "^5.12.7",
     "tslib": "^2.2.0",
     "winston": "^3.3.3",
-    "winston-transport-sentry-node": "^1.0.2"
+    "winston-transport-sentry-node": "^2.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
